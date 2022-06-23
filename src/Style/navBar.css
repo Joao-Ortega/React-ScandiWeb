@@ -1,0 +1,14 @@
+.sections {
+  font-family: "Raleway";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  height: 20px;
+  line-height: 120%;
+  text-transform: uppercase;
+  width: 37px;
+}
+
+.navigation-bar {
+  display: flex;
+}

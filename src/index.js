@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { store } from './store/store';
 import App from './App';
 import './Style/global.css';
+import './Style/navBar.css'
 import { BrowserRouter } from 'react-router-dom';
 
 const container = document.getElementById('root');
