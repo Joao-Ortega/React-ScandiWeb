@@ -1,14 +1,37 @@
+.sections-container {
+  display: flex;
+  justify-content: space-evenly;
+  width: 15%;
+}
+
 .sections {
   font-family: "Raleway";
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
-  height: 20px;
   line-height: 120%;
   text-transform: uppercase;
-  width: 37px;
+}
+
+.store-logo {
+  width: 10%;
 }
 
 .navigation-bar {
+  align-items: center;
+  border: 1px solid black;
   display: flex;
+  justify-content: space-around;
+  padding: 0.5%;
+}
+
+.currencies-and-cart-container {
+  display: flex;
+  justify-content: space-between;
+  width: 6%;
+}
+
+.cart-img {
+  height: 20px;
+  width: 30px;
 }
