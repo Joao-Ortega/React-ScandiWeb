@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { fetchCurrencies } from '../thunks/fetchs';
 
 const initialState = {
-  currencies: ['$ USD', '€ EUR', '¥ JPY'],
+  currencies: [],
 };
 
 export const currencySlice = createSlice({
@@ -11,6 +12,11 @@ export const currencySlice = createSlice({
     setCurrencies: (state, action) => {
       state.currencies = [action.payload]
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(fetchCurrencies.fulfilled, (state, action) => {
+      state.currencies = action.payload
+    })
   }
 })
 
