@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux';
 import logo from '../Images/a-logo.svg';
 import cart from '../Images/cart.svg';
-import { currencies } from '../Services/currencies';
 
-export default class NavBarComp extends Component {
+class NavBarComp extends Component {
   render() {
+    const { arrCurrencies: { currencies } } = this.props;
     return (
       <div className="navigation-bar">
         <div className="sections-container">
@@ -29,3 +30,9 @@ export default class NavBarComp extends Component {
     )
   }
 }
+
+const mapStateToProps = (state) => ({
+  arrCurrencies: state.currencies,
+});
+
+export default connect(mapStateToProps)(NavBarComp);
