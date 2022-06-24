@@ -28,7 +28,7 @@
 .currencies-and-cart-container {
   display: flex;
   justify-content: space-between;
-  width: 6%;
+  width: 5%;
 }
 
 .cart-img {
