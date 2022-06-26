@@ -12,6 +12,7 @@
   font-style: normal;
   font-weight: 400;
   line-height: 120%;
+  padding: 20px;
   text-transform: uppercase;
 }
 
@@ -21,10 +22,15 @@
 
 .navigation-bar {
   align-items: center;
-  border: 1px solid black;
+  /* border-bottom: 1px solid rgba(0, 0, 0, 0.115); */
   display: flex;
   justify-content: space-around;
   padding: 0.5%;
+}
+
+.selected {
+  border-bottom: 2px solid #5ECE7B;
+  color: #5ECE7B;
 }
 
 .currencies-and-cart-container {

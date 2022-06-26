@@ -6,7 +6,12 @@ import { fetchCurrencies } from '../thunks/fetchs';
 import { store } from '../store/store';
 
 class NavBarComp extends Component {
-
+  constructor() {
+    super();
+    this.state ={
+      btnsClasses: ['selected', '', ''],
+    }
+  }
   componentDidMount() {
     store.dispatch(fetchCurrencies())
   }
@@ -15,14 +20,33 @@ class NavBarComp extends Component {
     console.log(target.value);
   }
 
+  // handleClick = ({ target }) => {
+  //   const { changeCategory } = this.props;
+  //   changeCategory(target.name);
+  //   if (target.classList.contains('selected')) {
+  //     target.classList.remove('selected')
+  //   } else {
+  //     target.classList.add('selected')
+  //   }
+  // }
+
+  handleClick = ({ target }) => {
+    const { changeCategory } = this.props;
+    changeCategory(target.name);
+    const newClasses = ['', '', ''];
+    newClasses[target.value] = 'selected'
+    this.setState({ btnsClasses: newClasses})
+  }
+
   render() {
     const { arrCurrencies: { currencies } } = this.props;
+    const { btnsClasses } = this.state;
     return (
       <div className="navigation-bar">
         <div className="sections-container">
-          <button className="sections">All</button>
-          <button className="sections">Clothes</button>
-          <button className="sections">Tech</button>
+          <button className={`sections ${btnsClasses[0]}`} value={0} name="All" onClick={this.handleClick}>All</button>
+          <button className={`sections ${btnsClasses[1]}`} name="Clothes" value={1}onClick={this.handleClick}>Clothes</button>
+          <button className={`sections ${btnsClasses[2]}`} name="Tech" value={2} onClick={this.handleClick}>Tech</button>
         </div>
         <div className="store-logo">
           <img src={logo} alt="store logo" />

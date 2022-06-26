@@ -5,6 +5,7 @@ import { store } from './store/store';
 import App from './App';
 import './Style/global.css';
 import './Style/navBar.css'
+import './Style/plp.css';
 import { BrowserRouter } from 'react-router-dom';
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 
