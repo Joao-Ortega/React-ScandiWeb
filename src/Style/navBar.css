@@ -5,6 +5,8 @@
 }
 
 .sections {
+  background-color: white;
+  border: none;
   font-family: "Raleway", sans-serif;
   font-size: 16px;
   font-style: normal;

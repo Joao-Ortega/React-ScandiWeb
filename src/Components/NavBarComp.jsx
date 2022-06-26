@@ -20,9 +20,9 @@ class NavBarComp extends Component {
     return (
       <div className="navigation-bar">
         <div className="sections-container">
-          <span className="sections">All</span>
-          <span className="sections">Clothes</span>
-          <span className="sections">Tech</span>
+          <button className="sections">All</button>
+          <button className="sections">Clothes</button>
+          <button className="sections">Tech</button>
         </div>
         <div className="store-logo">
           <img src={logo} alt="store logo" />
