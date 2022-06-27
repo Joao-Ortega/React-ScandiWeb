@@ -2,27 +2,54 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import logo from '../Images/a-logo.svg';
 import cart from '../Images/cart.svg';
-import { fetchCurrencies } from '../thunks/fetchs';
+import { fetchCategories, fetchCurrencies } from '../thunks/fetchs';
 import { store } from '../store/store';
 
 class NavBarComp extends Component {
-
+  constructor() {
+    super();
+    this.state ={
+      btnsClasses: ['selected'],
+    }
+  }
   componentDidMount() {
-    store.dispatch(fetchCurrencies())
+    store.dispatch(fetchCurrencies());
+    store.dispatch(fetchCategories());
   }
 
   handleSymbol = ({ target }) => {
     console.log(target.value);
   }
 
+  handleClick = ({ target }) => {
+    const { changeCategory } = this.props;
+    changeCategory(target.name);
+    const newClasses = [];
+    newClasses[target.value] = 'selected'
+    this.setState({ btnsClasses: newClasses})
+  }
+
+  treatName = (str) => {
+    return `${str.charAt(0).toUpperCase()}${str.slice(1)}`
+  }
+
   render() {
-    const { arrCurrencies: { currencies } } = this.props;
+    const { arrCurrencies: { currencies }, arrCategories: { categories } } = this.props;
+    const { btnsClasses } = this.state;
     return (
       <div className="navigation-bar">
         <div className="sections-container">
-          <span className="sections">All</span>
-          <span className="sections">Clothes</span>
-          <span className="sections">Tech</span>
+          { categories && categories.map(({ name }, i) => (
+            <button
+            key={i}
+            className={`sections ${btnsClasses[i]}`}
+            value={i}
+            name={name}
+            onClick={this.handleClick}
+            >
+              {name}
+            </button>
+          )) }
         </div>
         <div className="store-logo">
           <img src={logo} alt="store logo" />
@@ -48,6 +75,7 @@ class NavBarComp extends Component {
 
 const mapStateToProps = (state) => ({
   arrCurrencies: state.currencies,
+  arrCategories: state.categories,
 });
 
 export default connect(mapStateToProps)(NavBarComp);

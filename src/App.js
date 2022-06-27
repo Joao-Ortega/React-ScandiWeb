@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
-import NavBarComp from './Components/NavBarComp'
+import { Route, Routes } from 'react-router-dom'
+import PLP from './Pages/PLP'
 
 export default class App extends Component {
   render() {
     return (
-      <>
-        <NavBarComp />
-      </>
+      <Routes>
+        <Route exact path='/' element={<PLP />} />
+      </Routes>
     )
   }
 }

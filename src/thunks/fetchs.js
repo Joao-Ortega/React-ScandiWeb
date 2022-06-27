@@ -5,7 +5,9 @@ import { client } from "..";
 export const fetchCurrencies = createAsyncThunk(
   "currency/getAllCurrencies",
   async () => {
-    const { data: { currencies } } = await client.query({
+    const {
+      data: { currencies },
+    } = await client.query({
       query: gql`
         query getCurrencies {
           currencies {
@@ -18,3 +20,50 @@ export const fetchCurrencies = createAsyncThunk(
     return currencies;
   }
 );
+
+export const fetchAllProducts = createAsyncThunk("products/getAllProducts", async () => {
+  const { data: { category: { products } } } = await client.query({
+    query: gql`
+      query getProducts {
+        category(input: { title: "all" }) {
+          name
+          products {
+            id
+            name
+            inStock
+            gallery
+            description
+            category
+            attributes {
+              name
+              items {
+                value
+              }
+            }
+            prices {
+              currency {
+                label
+                symbol
+              }
+              amount
+            }
+            brand
+          }
+        }
+      }
+    `,
+  });
+  return products;
+});
+
+export const fetchCategories = createAsyncThunk("categories/allCategories", async () => {
+  const { data: { categories } } = await client.query({
+    query: gql`
+    query allCategories {
+      categories {
+        name
+      }
+    }`
+  });
+  return categories;
+})
