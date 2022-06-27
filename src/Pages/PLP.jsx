@@ -26,12 +26,15 @@ class PLP extends Component {
 
   handleCategoryChange = (category) => {
     const { products: { allProducts } } = this.props;
-    if (category === 'All') {
-      this.setState({ currentCategory: category, listOfProducts: allProducts })
+    if (category === 'all') {
+      this.setState({
+        currentCategory: `${category.charAt(0).toUpperCase()}${category.slice(1)}`,
+        listOfProducts: allProducts
+      });
     } else {
       this.setState({
-        currentCategory: category,
-        listOfProducts: allProducts.filter((pr) => pr.category === category.toLowerCase())
+        currentCategory: `${category.charAt(0).toUpperCase()}${category.slice(1)}`,
+        listOfProducts: allProducts.filter((pr) => pr.category === category)
       });
     }
   }

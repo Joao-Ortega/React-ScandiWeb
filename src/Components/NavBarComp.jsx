@@ -2,51 +2,57 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import logo from '../Images/a-logo.svg';
 import cart from '../Images/cart.svg';
-import { fetchCurrencies } from '../thunks/fetchs';
+import { fetchCategories, fetchCurrencies } from '../thunks/fetchs';
 import { store } from '../store/store';
 
 class NavBarComp extends Component {
   constructor() {
     super();
     this.state ={
-      btnsClasses: ['selected', '', ''],
+      btnsClasses: ['selected'],
     }
   }
   componentDidMount() {
-    store.dispatch(fetchCurrencies())
+    store.dispatch(fetchCurrencies());
+    store.dispatch(fetchCategories());
   }
 
   handleSymbol = ({ target }) => {
     console.log(target.value);
   }
 
-  // handleClick = ({ target }) => {
-  //   const { changeCategory } = this.props;
-  //   changeCategory(target.name);
-  //   if (target.classList.contains('selected')) {
-  //     target.classList.remove('selected')
-  //   } else {
-  //     target.classList.add('selected')
-  //   }
-  // }
-
   handleClick = ({ target }) => {
     const { changeCategory } = this.props;
     changeCategory(target.name);
-    const newClasses = ['', '', ''];
+    const newClasses = [];
     newClasses[target.value] = 'selected'
     this.setState({ btnsClasses: newClasses})
   }
 
+  treatName = (str) => {
+    return `${str.charAt(0).toUpperCase()}${str.slice(1)}`
+  }
+
   render() {
-    const { arrCurrencies: { currencies } } = this.props;
+    const { arrCurrencies: { currencies }, arrCategories: { categories } } = this.props;
     const { btnsClasses } = this.state;
     return (
       <div className="navigation-bar">
         <div className="sections-container">
-          <button className={`sections ${btnsClasses[0]}`} value={0} name="All" onClick={this.handleClick}>All</button>
+          { categories && categories.map(({ name }, i) => (
+            <button
+            key={i}
+            className={`sections ${btnsClasses[i]}`}
+            value={i}
+            name={name}
+            onClick={this.handleClick}
+            >
+              {name}
+            </button>
+          )) }
+          {/* <button className={`sections ${btnsClasses[0]}`} value={0} name="All" onClick={this.handleClick}>All</button>
           <button className={`sections ${btnsClasses[1]}`} name="Clothes" value={1}onClick={this.handleClick}>Clothes</button>
-          <button className={`sections ${btnsClasses[2]}`} name="Tech" value={2} onClick={this.handleClick}>Tech</button>
+          <button className={`sections ${btnsClasses[2]}`} name="Tech" value={2} onClick={this.handleClick}>Tech</button> */}
         </div>
         <div className="store-logo">
           <img src={logo} alt="store logo" />
@@ -72,6 +78,7 @@ class NavBarComp extends Component {
 
 const mapStateToProps = (state) => ({
   arrCurrencies: state.currencies,
+  arrCategories: state.categories,
 });
 
 export default connect(mapStateToProps)(NavBarComp);

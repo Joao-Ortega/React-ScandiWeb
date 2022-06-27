@@ -55,3 +55,15 @@ export const fetchAllProducts = createAsyncThunk("products/getAllProducts", asyn
   });
   return products;
 });
+
+export const fetchCategories = createAsyncThunk("categories/allCategories", async () => {
+  const { data: { categories } } = await client.query({
+    query: gql`
+    query allCategories {
+      categories {
+        name
+      }
+    }`
+  });
+  return categories;
+})
