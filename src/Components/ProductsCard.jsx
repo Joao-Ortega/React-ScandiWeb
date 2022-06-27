@@ -25,14 +25,3 @@ export default class ProductsCard extends Component {
     )
   }
 }
-// allProducts && allProducts.map(({ id, gallery, name, prices, inStock })
-{/* // inStock ? <div className="product-card" key={ id }>
-//             <img className="products-images" src={ gallery[0] } alt="" />
-//             <p className="product-name">{ name }</p>
-//             <p>{ `${prices[0].currency.symbol}${prices[0].amount}` }</p>
-//           </div> : <div className="product-card" key={ id }>
-//           <p className="out-title">Out Of Stock</p>
-//           <img className="products-images" src={ gallery[0] } alt="" />
-//           <p className="product-name">{ name }</p>
-//           <p>{ `${prices[0].currency.symbol}${prices[0].amount}` }</p>
-//         </div> */}
