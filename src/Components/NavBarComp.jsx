@@ -50,9 +50,6 @@ class NavBarComp extends Component {
               {name}
             </button>
           )) }
-          {/* <button className={`sections ${btnsClasses[0]}`} value={0} name="All" onClick={this.handleClick}>All</button>
-          <button className={`sections ${btnsClasses[1]}`} name="Clothes" value={1}onClick={this.handleClick}>Clothes</button>
-          <button className={`sections ${btnsClasses[2]}`} name="Tech" value={2} onClick={this.handleClick}>Tech</button> */}
         </div>
         <div className="store-logo">
           <img src={logo} alt="store logo" />
