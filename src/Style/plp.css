@@ -22,10 +22,10 @@
   color: #8D8F9A;
   top: 40%;
   font-family: "Raleway" sans-serif;
-  font-size: 28px;
+  font-size: 18px;
   font-style: normal;
   font-weight: 400;
-  left: 25%;
+  left: 30%;
   line-height: 1%;
   position: relative;
 }
@@ -57,9 +57,8 @@
 }
 
 .out-image {
-  align-self:stretch;
   width: 356px;
-  height: 330px;
+  height: 338px;
   margin-bottom: 4px;
   opacity: 0.5;
 }
