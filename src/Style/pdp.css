@@ -1,0 +1,53 @@
+.product-detail-container {
+  /* border: 1px solid black; */
+  display: flex;
+  justify-content: space-evenly;
+  min-height: 90vh;
+  margin: 2% auto;
+  width: 90vw;
+}
+
+.gallery-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.gallery-img {
+  /* border: 1px solid black; */
+  height: 125px;
+  width: 125px;
+}
+
+.showing-img {
+  height: 610px;
+  width: 610px;
+}
+
+.details-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.name-id {
+  font-family: "Raleway" sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 30px;
+  line-height: 27px;
+}
+
+.product-name {
+  font-family: "Raleway" sans-serif;
+  font-style: normal;
+  font-size: 30px;
+  line-height: 27px;
+}
+
+.attr-names {
+  font-family: "Roboto Condensed" sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 18px;
+}

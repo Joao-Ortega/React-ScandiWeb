@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import logo from '../Images/a-logo.svg';
 import cart from '../Images/cart.svg';
 import arrowDown from '../Images/Vector.svg';
-import { fetchCategories, fetchCurrencies } from '../thunks/fetchs';
+// import { fetchCategories, fetchCurrencies } from '../thunks/fetchs';
 import { setCurrency } from '../Reducers/currenciesSlice';
 import { store } from '../store/store';
 
@@ -15,10 +15,6 @@ class NavBarComp extends Component {
       isClicked: false,
       currentCurrencie: '$'
     };
-  }
-  componentDidMount() {
-    store.dispatch(fetchCurrencies());
-    store.dispatch(fetchCategories());
   }
 
   changeCurrency = () => {
@@ -100,15 +96,6 @@ class NavBarComp extends Component {
               </div>
             )}
           </div>
-          {/* <select
-            name="currencies"
-            id="currencies-symbols"
-            onChange={ this.handleSymbol }
-          > */}
-          {/* { currencies.map(({ symbol, label }) => (
-              <span key={symbol} value={symbol}>{`${symbol} ${label}`}</span>
-            )) } */}
-          {/* </select> */}
           <div>
             <img src={cart} alt="shopping cart" className="cart-img" />
           </div>
