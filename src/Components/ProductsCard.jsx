@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 export default class ProductsCard extends Component {
   render() {
     const { allProducts } = this.props;
-    console.log(allProducts);
     return (
       <div className="products-container">
        { allProducts && allProducts.map(({ id, gallery, name, prices, inStock }) => (
