@@ -3,14 +3,15 @@ import { fetchCurrencies } from '../thunks/fetchs';
 
 const initialState = {
   currencies: [],
+  currCurrency: '$',
 };
 
 export const currencySlice = createSlice({
   name: 'currencies',
   initialState,
   reducers: {
-    setCurrencies: (state, action) => {
-      state.currencies = [action.payload]
+    setCurrency: (state, action) => {
+      state.currCurrency = action.payload
     },
   },
   extraReducers: (builder) => {
@@ -20,6 +21,6 @@ export const currencySlice = createSlice({
   }
 })
 
-export const { setCurrencies } = currencySlice.actions;
+export const { setCurrency } = currencySlice.actions;
 
 export default currencySlice.reducer;

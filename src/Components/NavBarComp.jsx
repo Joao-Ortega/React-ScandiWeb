@@ -4,6 +4,7 @@ import logo from '../Images/a-logo.svg';
 import cart from '../Images/cart.svg';
 import arrowDown from '../Images/Vector.svg';
 import { fetchCategories, fetchCurrencies } from '../thunks/fetchs';
+import { setCurrency } from '../Reducers/currenciesSlice';
 import { store } from '../store/store';
 
 class NavBarComp extends Component {
@@ -33,7 +34,8 @@ class NavBarComp extends Component {
     this.setState({
       isClicked: false,
       currentCurrencie: id,
-    })
+    });
+    store.dispatch(setCurrency(id))
   }
 
   handleClick = ({ target }) => {
