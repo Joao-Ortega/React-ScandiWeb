@@ -34,14 +34,15 @@
   font-style: normal;
   font-weight: 500;
   font-size: 30px;
-  line-height: 27px;
+  line-height: 50px;
 }
 
 .product-name {
   font-family: "Raleway" sans-serif;
   font-style: normal;
   font-size: 30px;
-  line-height: 27px;
+  line-height: 35px;
+  margin-bottom: 9%;
 }
 
 .attr-names {
@@ -49,5 +50,33 @@
   font-style: normal;
   font-weight: 700;
   font-size: 18px;
+  line-height: 30px;
+}
+
+.attr-container {
+  align-items: center;
+  /* border: 1px solid red; */
+  display: flex;
+  height: 80%;
+  justify-content: space-evenly;
+  width: 80%;
+}
+
+.attr-values {
+  border: 1px solid black;
+  cursor: pointer;
+  font-family: "Source Sans Pro";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  height: 18px;
   line-height: 18px;
+  padding: 7%;
+  text-align: center;
+  width: 18px;
+}
+
+.choosed {
+  background-color: black;
+  color: white;
 }
