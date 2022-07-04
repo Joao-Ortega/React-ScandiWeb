@@ -9,7 +9,7 @@ class PDP extends Component {
     this.state = {
       productClicked: { gallery: [] },
       currentImg: 0,
-      attrSelected: ['choosed'],
+      // attrSelected: ['choosed'],
       productInfos: {}
     }
   }
@@ -51,16 +51,44 @@ class PDP extends Component {
     this.setState({ currentImg: Number(name) })
   }
 
-  changeAttr = ({ target: { id } }) => {
-    const changeClass = []
-    changeClass[id] = 'choosed'
-    this.setState((prevState) => ({
-      attrSelected: changeClass,
-    }))
+  // changeAttr = ({ target: { id } }) => {
+  //   const changeClass = []
+  //   changeClass[id] = 'choosed'
+  //   this.setState((prevState) => ({
+  //     attrSelected: changeClass,
+  //   }))
+  // }
+
+  renderAttributes = (type, items) => {
+    const { attrSelected } = this.state;
+    if (type === 'swatch') {
+      return (
+        items.map(({ value }, i) => (
+          <div
+            key={i}
+            className="colors"
+            style={{ backgroundColor: value }}
+          />
+        ))
+      )
+    }
+    return (
+      items.map(({ value }, i) => (
+        <div
+          // onClick={this.changeAttr}
+          className="attr-texts"
+          id={i}
+          value={value}
+          key={value}
+        >
+          {value}
+        </div>
+      ))
+    )
   }
 
   render() {
-    const { productClicked, currentImg, attrSelected } = this.state;
+    const { productClicked, currentImg } = this.state;
     console.log(productClicked.attributes);
     return (
       <div>
@@ -97,17 +125,7 @@ class PDP extends Component {
                 <div className="all-attr" key={i}>
                   <span className="attr-names">{attr.name}:</span>
                   <div className="attr-container">
-                    {attr.items.map((size, i) => (
-                      <div
-                        onClick={ this.changeAttr }
-                        className={`attr-values ${attrSelected[i]}`}
-                        id={i}
-                        value={size.value}
-                        key={size.value}
-                      >
-                        {size.value}
-                      </div>
-                    ))}
+                    {this.renderAttributes(attr.type, attr.items)}
                   </div>
                 </div>
               ))}

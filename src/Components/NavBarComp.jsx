@@ -17,6 +17,11 @@ class NavBarComp extends Component {
     };
   }
 
+  componentDidMount() {
+    const { selectedCurrency  } = this.props;
+    this.setState({ currentCurrencie: selectedCurrency })
+  }
+
   changeCurrency = () => {
     const { isClicked } = this.state;
     this.setState({ isClicked: !isClicked });
@@ -107,6 +112,7 @@ class NavBarComp extends Component {
 
 const mapStateToProps = (state) => ({
   arrCurrencies: state.currencies,
+  selectedCurrency: state.currencies.currCurrency,
   arrCategories: state.categories,
 });
 
