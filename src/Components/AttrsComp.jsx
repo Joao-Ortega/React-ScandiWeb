@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux';
 
-export default class AttrsComp extends Component {
+class AttrsComp extends Component {
   constructor() {
     super();
     this.state = {
@@ -9,8 +10,8 @@ export default class AttrsComp extends Component {
   }
 
   componentDidMount() {
-    const { attribute, items } = this.props;
-    console.log('BORA', attribute, items);
+    const { attribute, items, prices } = this.props;
+    console.log(prices);
     this.setState({ [attribute]: items[0].value })
   }
 
@@ -19,10 +20,10 @@ export default class AttrsComp extends Component {
     const value = target.getAttribute('value');
     const changeClass = []
     changeClass[target.id] = 'choosed'
-    this.setState((prevState) => ({
+    this.setState({
       attrSelected: changeClass,
       [attribute]: value,
-    }))
+    })
   }
 
   renderAttributes = () => {
@@ -33,7 +34,10 @@ export default class AttrsComp extends Component {
         items.map(({ value }, i) => (
           <div
             key={i}
-            className="colors"
+            className={`colors ${attrSelected[i]}`}
+            value={value}
+            id={i}
+            onClick={ this.changeAttr }
             style={{ backgroundColor: value }}
           />
         ))
@@ -54,10 +58,20 @@ export default class AttrsComp extends Component {
     )
   }
 
+
   render() {
-    const { attribute, items } = this.props;
     return (
-      this.renderAttributes()
+      <div>
+        <div className="attr-container">
+          {this.renderAttributes()}
+        </div>
+      </div>
     )
   }
 }
+
+const mapStateToProps = (state) => ({
+  currency: state.currencies.currCurrency,
+});
+
+export default connect(mapStateToProps)(AttrsComp);

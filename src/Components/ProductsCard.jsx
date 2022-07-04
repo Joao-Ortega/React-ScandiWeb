@@ -2,8 +2,17 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import addToCartBtn from '../Images/addToCart.svg';
+import { setCurrency } from '../Reducers/currenciesSlice';
+import { store } from '../store/store';
 
 class ProductsCard extends Component {
+  componentDidMount() {
+    const exchange = JSON.parse(localStorage.getItem('exchange'));
+    if (exchange) {
+      store.dispatch(setCurrency(exchange))
+    }
+  }
+
   render() {
     const { allProducts, currentCurrency } = this.props;
     return (
@@ -16,7 +25,7 @@ class ProductsCard extends Component {
               <img className="products-images" src={ gallery[0] } alt="product" />
               <p className="product-name">{ name }</p>
               <p className="teste">
-                { `${currentCurrency}${prices
+                { `${currentCurrency} ${prices
                   .find((tag) => tag.currency.symbol === currentCurrency).amount}` }
               </p>
             </Link>
@@ -29,7 +38,7 @@ class ProductsCard extends Component {
             <img className="out-image" src={ gallery[0] } alt="" />
             <p className="product-name-out">{ name }</p>
             <p className="price-out">
-              { `${currentCurrency}${prices
+              { `${currentCurrency} ${prices
                   .find((tag) => tag.currency.symbol === currentCurrency).amount}` }
             </p>
           </div>

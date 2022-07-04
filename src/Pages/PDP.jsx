@@ -1,5 +1,6 @@
 import { gql } from '@apollo/client';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { client } from '..';
 import AttrsComp from '../Components/AttrsComp';
 import NavBarComp from '../Components/NavBarComp';
@@ -11,18 +12,19 @@ class PDP extends Component {
       productClicked: { gallery: [] },
       currentImg: 0,
       // attrSelected: ['choosed'],
-      productInfos: {}
-    }
+      productInfos: {},
+    };
   }
 
   componentDidMount() {
-    this.fetchProductById()
+    this.fetchProductById();
   }
 
   fetchProductById = () => {
-    const id = window.location.pathname.split('/')[1];
-    client.query({
-      query: gql`
+    const id = window.location.pathname.split("/")[1];
+    client
+      .query({
+        query: gql`
         query productById {
           product(id: "${id}") {
             id,
@@ -44,99 +46,80 @@ class PDP extends Component {
               amount
             }
           }
-      }`
-    }).then(({ data: { product } }) => this.setState({ productClicked: product }))
-  }
+      }`,
+      })
+      .then(({ data: { product } }) =>
+        this.setState({ productClicked: product })
+      );
+  };
 
   changePicture = ({ target: { name } }) => {
-    this.setState({ currentImg: Number(name) })
-  }
-
-  // changeAttr = ({ target: { id } }) => {
-  //   const changeClass = []
-  //   changeClass[id] = 'choosed'
-  //   this.setState((prevState) => ({
-  //     attrSelected: changeClass,
-  //   }))
-  // }
-
-  // renderAttributes = (type, items) => {
-  //   const { attrSelected } = this.state;
-  //   if (type === 'swatch') {
-  //     return (
-  //       items.map(({ value }, i) => (
-  //         <div
-  //           key={i}
-  //           className="colors"
-  //           style={{ backgroundColor: value }}
-  //         />
-  //       ))
-  //     )
-  //   }
-  //   return (
-  //     items.map(({ value }, i) => (
-  //       <div
-  //         onClick={this.changeAttr}
-  //         className={`attr-texts ${attrSelected[i]} `}
-  //         id={i}
-  //         value={value}
-  //         key={value}
-  //       >
-  //         {value}
-  //       </div>
-  //     ))
-  //   )
-  // }
+    this.setState({ currentImg: Number(name) });
+  };
 
   render() {
     const { productClicked, currentImg } = this.state;
-    console.log(productClicked.attributes);
+    const { currency } = this.props;
+    const PARSER = new DOMParser();
+    console.log('DESCRIÇÃO', productClicked.description);
+    console.log(PARSER.parseFromString(productClicked.description, 'text/html'));
     return (
       <div>
         <NavBarComp />
         <div className="product-detail-container">
-          { productClicked && (
+          {productClicked && (
             <div className="gallery-container">
-              { productClicked.gallery.map((imgs, i) => (
+              {productClicked.gallery.map((imgs, i) => (
                 <img
                   src={imgs}
                   alt="product gallery"
                   key={i}
                   name={i}
                   className="gallery-img"
-                  onClick={ this.changePicture }
+                  onClick={this.changePicture}
                 />
-              )) }
+              ))}
             </div>
-          ) }
+          )}
           <img
             src={productClicked.gallery[currentImg]}
             alt="bigger product"
             className="showing-img"
           />
           <div className="details-info">
-            <span
-              className="name-id"
-            >
-              { productClicked.id && `${productClicked.id[0].toUpperCase()}${productClicked.id.slice(1)}`}
+            <span className="name-id">
+              {productClicked.id &&
+                `${productClicked.id[0].toUpperCase()}${productClicked.id.slice(
+                  1
+                )}`}
             </span>
-            <span className="product-name" >{productClicked.name}</span>
-            { productClicked.attributes && productClicked.attributes
-              .map((attr, i) => (
+            <span className="product-name">{productClicked.name}</span>
+            {productClicked.attributes &&
+              productClicked.attributes.map((attr, i) => (
                 <div className="all-attr" key={i}>
                   <span className="attr-names">{attr.name}:</span>
-                  <div className="attr-container">
-                    {/* {this.renderAttributes(attr.type, attr.items)} */}
-                    <AttrsComp attribute={attr.name} items={attr.items} />
-                  </div>
+                  <AttrsComp
+                    attribute={attr.name}
+                    items={attr.items}
+                    prices={productClicked.prices}
+                  />
                 </div>
               ))}
+            <span className="attr-names">{productClicked.prices && productClicked.prices[0].__typename}:</span>
+            <div className="price">
+              {`${currency} ${productClicked.prices && productClicked.prices
+                .find((obj) => obj.currency.symbol === currency).amount}`}
+            </div>
+            <button type="button" className="add-btn">ADD TO CART</button>
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
 
+const mapStateToProps = (state) => ({
+  currency: state.currencies.currCurrency,
+});
 
-export default PDP;
+export default connect(mapStateToProps)(PDP);

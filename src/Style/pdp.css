@@ -15,6 +15,7 @@
 
 .gallery-img {
   /* border: 1px solid black; */
+  cursor: pointer;
   height: 125px;
   width: 125px;
 }
@@ -45,12 +46,20 @@
   margin-bottom: 9%;
 }
 
+.all-attr {
+  height: 15%;
+  min-height: 15%;
+  min-width: 100%;
+  width: 100%;
+}
+
 .attr-names {
   font-family: "Roboto Condensed" sans-serif;
   font-style: normal;
-  font-weight: 700;
-  font-size: 18px;
-  line-height: 30px;
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 50px;
+  text-transform: uppercase;
 }
 
 .attr-container {
@@ -67,7 +76,7 @@
   border: 1px solid black;
   cursor: pointer;
   display: flex;
-  font-family: "Source Sans Pro";
+  font-family: "Source Sans Pro" sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -89,5 +98,30 @@
 
 .choosed {
   background-color: black;
+  border: 3px solid rgb(145, 143, 143);
   color: white;
+}
+
+.price {
+  font-family: "Raleway" sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 18px;
+}
+
+.add-btn {
+  background-color: #5ece7b;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-family: "Raleway" sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 120%;
+  margin: 10%;
+  min-width: 90%;
+  padding: 7%;
+  width: 110%;
 }
