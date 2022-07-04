@@ -1,6 +1,7 @@
 import { gql } from '@apollo/client';
 import React, { Component } from 'react';
 import { client } from '..';
+import AttrsComp from '../Components/AttrsComp';
 import NavBarComp from '../Components/NavBarComp';
 
 class PDP extends Component {
@@ -59,33 +60,33 @@ class PDP extends Component {
   //   }))
   // }
 
-  renderAttributes = (type, items) => {
-    const { attrSelected } = this.state;
-    if (type === 'swatch') {
-      return (
-        items.map(({ value }, i) => (
-          <div
-            key={i}
-            className="colors"
-            style={{ backgroundColor: value }}
-          />
-        ))
-      )
-    }
-    return (
-      items.map(({ value }, i) => (
-        <div
-          // onClick={this.changeAttr}
-          className="attr-texts"
-          id={i}
-          value={value}
-          key={value}
-        >
-          {value}
-        </div>
-      ))
-    )
-  }
+  // renderAttributes = (type, items) => {
+  //   const { attrSelected } = this.state;
+  //   if (type === 'swatch') {
+  //     return (
+  //       items.map(({ value }, i) => (
+  //         <div
+  //           key={i}
+  //           className="colors"
+  //           style={{ backgroundColor: value }}
+  //         />
+  //       ))
+  //     )
+  //   }
+  //   return (
+  //     items.map(({ value }, i) => (
+  //       <div
+  //         onClick={this.changeAttr}
+  //         className={`attr-texts ${attrSelected[i]} `}
+  //         id={i}
+  //         value={value}
+  //         key={value}
+  //       >
+  //         {value}
+  //       </div>
+  //     ))
+  //   )
+  // }
 
   render() {
     const { productClicked, currentImg } = this.state;
@@ -125,7 +126,8 @@ class PDP extends Component {
                 <div className="all-attr" key={i}>
                   <span className="attr-names">{attr.name}:</span>
                   <div className="attr-container">
-                    {this.renderAttributes(attr.type, attr.items)}
+                    {/* {this.renderAttributes(attr.type, attr.items)} */}
+                    <AttrsComp attribute={attr.name} items={attr.items} />
                   </div>
                 </div>
               ))}
