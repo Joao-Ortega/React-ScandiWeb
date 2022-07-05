@@ -14,7 +14,7 @@
 }
 
 .gallery-img {
-  /* border: 1px solid black; */
+  border: 1px solid rgba(0, 0, 0, 0.094);
   cursor: pointer;
   height: 125px;
   width: 125px;
@@ -28,6 +28,7 @@
 .details-info {
   display: flex;
   flex-direction: column;
+  max-width: 18%;
 }
 
 .name-id {
@@ -120,8 +121,18 @@
   font-weight: 600;
   font-size: 16px;
   line-height: 120%;
-  margin: 10%;
+  margin: 10% 5% 10% 0;
   min-width: 90%;
   padding: 7%;
+  width: 110%;
+}
+
+.description {
+  font-family: "Roboto" sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 159.96%;
+  min-width: 100%;
   width: 110%;
 }

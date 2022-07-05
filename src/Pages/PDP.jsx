@@ -2,6 +2,7 @@ import { gql } from '@apollo/client';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { client } from '..';
+import { Markup } from 'interweave';
 import AttrsComp from '../Components/AttrsComp';
 import NavBarComp from '../Components/NavBarComp';
 
@@ -11,7 +12,6 @@ class PDP extends Component {
     this.state = {
       productClicked: { gallery: [] },
       currentImg: 0,
-      // attrSelected: ['choosed'],
       productInfos: {},
     };
   }
@@ -60,9 +60,6 @@ class PDP extends Component {
   render() {
     const { productClicked, currentImg } = this.state;
     const { currency } = this.props;
-    const PARSER = new DOMParser();
-    console.log('DESCRIÇÃO', productClicked.description);
-    console.log(PARSER.parseFromString(productClicked.description, 'text/html'));
     return (
       <div>
         <NavBarComp />
@@ -111,6 +108,11 @@ class PDP extends Component {
                 .find((obj) => obj.currency.symbol === currency).amount}`}
             </div>
             <button type="button" className="add-btn">ADD TO CART</button>
+            <div className="description">
+              {productClicked.description && (
+                <Markup content={productClicked.description} />
+              )}
+            </div>
           </div>
         </div>
       </div>
