@@ -10,8 +10,7 @@ class AttrsComp extends Component {
   }
 
   componentDidMount() {
-    const { attribute, items, prices } = this.props;
-    console.log(prices);
+    const { attribute, items } = this.props;
     this.setState({ [attribute]: items[0].value })
   }
 

@@ -13,6 +13,21 @@ class ProductsCard extends Component {
     }
   }
 
+  handleAddition = ({ target }) => {
+    const { allProducts } = this.props;
+    const { id, name, prices, attributes, gallery } = allProducts.find((item) => item.id === target.id);
+    const objToLocal = {
+      id,
+      name,
+      prices,
+      attributes,
+      gallery: gallery[0],
+    }
+    const isEmpty = JSON.parse(localStorage.getItem('cart'));
+    if (!isEmpty) return localStorage.setItem('cart', JSON.stringify([objToLocal]))
+    localStorage.setItem('cart', JSON.stringify([...isEmpty, objToLocal]))
+  }
+
   render() {
     const { allProducts, currentCurrency } = this.props;
     return (
@@ -29,8 +44,12 @@ class ProductsCard extends Component {
                   .find((tag) => tag.currency.symbol === currentCurrency).amount}` }
               </p>
             </Link>
-            <button className="addCartBtn">
-              <img src={addToCartBtn} alt="add to cart button"  />
+            <button
+              type="button"
+              className="addCartBtn"
+              onClick={ this.handleAddition }
+            >
+              <img id={id} src={addToCartBtn} alt="add to cart button"  />
             </button>
           </div> :
           <div className="product-card-out" key={ id }>

@@ -20,7 +20,6 @@ class NavBarComp extends Component {
   componentDidMount() {
     const { selectedCurrency  } = this.props;
     const exchange = JSON.parse(localStorage.getItem('exchange'));
-    console.log(exchange);
     if (exchange) {
       this.setState({ currentCurrencie: exchange })  
     } else {
@@ -32,10 +31,6 @@ class NavBarComp extends Component {
     const { isClicked } = this.state;
     this.setState({ isClicked: !isClicked });
   };
-
-  // handleSymbol = ({ target }) => {
-  //   console.log(target.value);
-  // };
 
   currencyClick = ({ target: { id } }) => {
     this.setState({
