@@ -6,6 +6,7 @@ import App from './App';
 import './Style/global.css';
 import './Style/navBar.css'
 import './Style/plp.css';
+import './Style/pdp.css';
 import { BrowserRouter } from 'react-router-dom';
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 

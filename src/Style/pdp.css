@@ -1,0 +1,138 @@
+.product-detail-container {
+  /* border: 1px solid black; */
+  display: flex;
+  justify-content: space-evenly;
+  min-height: 90vh;
+  margin: 2% auto;
+  width: 90vw;
+}
+
+.gallery-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.gallery-img {
+  border: 1px solid rgba(0, 0, 0, 0.094);
+  cursor: pointer;
+  height: 125px;
+  width: 125px;
+}
+
+.showing-img {
+  height: 610px;
+  width: 610px;
+}
+
+.details-info {
+  display: flex;
+  flex-direction: column;
+  max-width: 18%;
+}
+
+.name-id {
+  font-family: "Raleway" sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 30px;
+  line-height: 50px;
+}
+
+.product-name {
+  font-family: "Raleway" sans-serif;
+  font-style: normal;
+  font-size: 30px;
+  line-height: 35px;
+  margin-bottom: 9%;
+}
+
+.all-attr {
+  height: 15%;
+  min-height: 15%;
+  min-width: 100%;
+  width: 100%;
+}
+
+.attr-names {
+  font-family: "Roboto Condensed" sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 50px;
+  text-transform: uppercase;
+}
+
+.attr-container {
+  align-items: center;
+  /* border: 1px solid red; */
+  display: flex;
+  height: 80%;
+  justify-content: space-evenly;
+  width: 150%;
+}
+
+.attr-texts {
+  align-items: center;
+  border: 1px solid black;
+  cursor: pointer;
+  display: flex;
+  font-family: "Source Sans Pro" sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  height: 2px;
+  justify-content: center;
+  line-height: 18px;
+  padding: 6%;
+  text-align: center;
+  width: 2px;
+}
+
+.colors {
+  border: 1px solid black;
+  cursor: pointer;
+  height: 2px;
+  padding: 6%;
+  width: 2px;
+}
+
+.choosed {
+  background-color: black;
+  border: 3px solid rgb(145, 143, 143);
+  color: white;
+}
+
+.price {
+  font-family: "Raleway" sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 18px;
+}
+
+.add-btn {
+  background-color: #5ece7b;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-family: "Raleway" sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 120%;
+  margin: 10% 5% 10% 0;
+  min-width: 90%;
+  padding: 7%;
+  width: 110%;
+}
+
+.description {
+  font-family: "Roboto" sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 159.96%;
+  min-width: 100%;
+  width: 110%;
+}

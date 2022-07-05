@@ -38,6 +38,15 @@
   justify-content: center;
   margin: 2%;
   max-height: 450px;
+  padding: 0.8%;
+}
+
+.product-card:hover {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.product-card:hover + .addCartBtn {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 .product-card-out {
@@ -48,6 +57,15 @@
   justify-content: center;
   margin: 2%;
   max-height: 450px;
+}
+
+.addCartBtn {
+  align-self:flex-end;
+  background-color: white;
+  border: none;
+  bottom: 10%;
+  position: relative;
+  right: 6%;
 }
 
 .products-images {
