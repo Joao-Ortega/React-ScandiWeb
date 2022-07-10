@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import logo from '../Images/a-logo.svg';
 import cart from '../Images/cart.svg';
 import arrowDown from '../Images/Vector.svg';
-// import { fetchCategories, fetchCurrencies } from '../thunks/fetchs';
 import { setCurrency } from '../Reducers/currenciesSlice';
 import { store } from '../store/store';
 
@@ -13,7 +12,8 @@ class NavBarComp extends Component {
     this.state = {
       btnsClasses: ['selected'],
       isClicked: false,
-      currentCurrencie: '$'
+      currentCurrencie: '$',
+      cartItems: 0,
     };
   }
 
@@ -57,6 +57,7 @@ class NavBarComp extends Component {
     const {
       arrCurrencies: { currencies },
       arrCategories: { categories },
+      cartLength,
     } = this.props;
     const { btnsClasses, isClicked, currentCurrencie } = this.state;
     return (
@@ -104,7 +105,15 @@ class NavBarComp extends Component {
             )}
           </div>
           <div>
-            <img src={cart} alt="shopping cart" className="cart-img" />
+            <button
+              type="button"
+              className="cart-icon-btn"
+            >
+              <img src={cart} alt="shopping cart" className="cart-img" />
+              {cartLength > 0 && (
+                <span className="cart-length" >{cartLength}</span>
+              )}
+            </button>
           </div>
         </div>
       </div>
@@ -116,6 +125,7 @@ const mapStateToProps = (state) => ({
   arrCurrencies: state.currencies,
   selectedCurrency: state.currencies.currCurrency,
   arrCategories: state.categories,
+  cartLength: state.cart.cartSize,
 });
 
 export default connect(mapStateToProps)(NavBarComp);

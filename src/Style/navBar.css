@@ -1,7 +1,7 @@
 .sections-container {
   display: flex;
   justify-content: space-evenly;
-  width: 15%;
+  width: 18%;
 }
 
 .sections {
@@ -24,6 +24,7 @@
   background-color: white;
   border: none;
   font-size: 18px;
+  padding: 0;
 }
 
 #arrow-down {
@@ -45,6 +46,7 @@
 }
 
 .currencies-and-cart-container {
+  align-items: center;
   display: flex;
   justify-content: space-between;
   width: 5%;
@@ -69,7 +71,27 @@
   background-color: rgb(220, 218, 218);
 }
 
+.cart-icon-btn {
+  background-color: white;
+  border: none;
+  cursor: pointer;
+  min-width: 60px;
+  padding: 0;
+}
+
 .cart-img {
   height: 20px;
   width: 30px;
+}
+
+.cart-length {
+  background-color: black;
+  border-radius: 100%;
+  color: white;
+  font-size: 15px;
+  padding-left: 2px;
+  padding-right: 2px;
+  position: relative;
+  top: -11px;
+  left: -7px;
 }

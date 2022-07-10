@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import addToCartBtn from '../Images/addToCart.svg';
+import { updateCartLength } from '../Reducers/cartSlice';
 import { setCurrency } from '../Reducers/currenciesSlice';
 import { store } from '../store/store';
 
@@ -24,8 +25,13 @@ class ProductsCard extends Component {
       gallery: gallery[0],
     }
     const isEmpty = JSON.parse(localStorage.getItem('cart'));
-    if (!isEmpty) return localStorage.setItem('cart', JSON.stringify([objToLocal]))
-    localStorage.setItem('cart', JSON.stringify([...isEmpty, objToLocal]))
+    if (!isEmpty) {
+      store.dispatch(updateCartLength([objToLocal].length))
+      localStorage.setItem('cart', JSON.stringify([objToLocal]))
+    } else {
+      store.dispatch(updateCartLength([...isEmpty, objToLocal].length))
+      localStorage.setItem('cart', JSON.stringify([...isEmpty, objToLocal]))
+    }
   }
 
   render() {
