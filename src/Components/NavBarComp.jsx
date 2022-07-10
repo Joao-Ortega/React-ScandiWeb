@@ -5,6 +5,7 @@ import cart from '../Images/cart.svg';
 import arrowDown from '../Images/Vector.svg';
 import { setCurrency } from '../Reducers/currenciesSlice';
 import { store } from '../store/store';
+import ItemsInCart from './ItemsInCart';
 
 class NavBarComp extends Component {
   constructor() {
@@ -14,6 +15,7 @@ class NavBarComp extends Component {
       isClicked: false,
       currentCurrencie: '$',
       cartItems: 0,
+      cartOverlay: false,
     };
   }
 
@@ -29,7 +31,7 @@ class NavBarComp extends Component {
 
   changeCurrency = () => {
     const { isClicked } = this.state;
-    this.setState({ isClicked: !isClicked });
+    this.setState({ isClicked: !isClicked, cartOverlay: false });
   };
 
   currencyClick = ({ target: { id } }) => {
@@ -42,16 +44,25 @@ class NavBarComp extends Component {
   }
 
   handleClick = ({ target }) => {
-    const { changeCategory } = this.props;
-    changeCategory(target.name);
-    const newClasses = [];
-    newClasses[target.value] = "selected";
-    this.setState({ btnsClasses: newClasses });
+    const currentLocation = window.location.href;
+    const MAIN_URL = 'http://localhost:3000/';
+    if (currentLocation === MAIN_URL) {
+      const { changeCategory } = this.props;
+      changeCategory(target.name);
+      const newClasses = [];
+      newClasses[target.value] = "selected";
+      this.setState({ btnsClasses: newClasses });
+    }
   };
 
   treatName = (str) => {
     return `${str.charAt(0).toUpperCase()}${str.slice(1)}`;
   };
+
+  showPreview = () => {
+    const { cartOverlay } = this.state;
+    this.setState({ cartOverlay: !cartOverlay, isClicked: false })
+  }
 
   render() {
     const {
@@ -59,7 +70,7 @@ class NavBarComp extends Component {
       arrCategories: { categories },
       cartLength,
     } = this.props;
-    const { btnsClasses, isClicked, currentCurrencie } = this.state;
+    const { btnsClasses, isClicked, currentCurrencie, cartOverlay } = this.state;
     return (
       <div className="navigation-bar">
         <div className="sections-container">
@@ -104,16 +115,22 @@ class NavBarComp extends Component {
               </div>
             )}
           </div>
-          <div>
+          <div className="test">
             <button
               type="button"
               className="cart-icon-btn"
+              onClick={ this.showPreview }
             >
               <img src={cart} alt="shopping cart" className="cart-img" />
               {cartLength > 0 && (
                 <span className="cart-length" >{cartLength}</span>
               )}
             </button>
+            {cartOverlay && (
+              <div className="cart-preview">
+                <ItemsInCart itemsQt={cartLength} />
+              </div>
+            )}
           </div>
         </div>
       </div>
