@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
+import { updateCartLength } from '../Reducers/cartSlice';
+import { store } from '../store/store';
 
 class ItemsInCart extends Component {
   constructor() {
@@ -34,6 +36,17 @@ class ItemsInCart extends Component {
       return acc;
     }, []);
     this.setState({ items: treatedItems })
+  }
+
+  sumProduct = ({ target: { id } }) => {
+    const { items } = this.state;
+    const product = {...items[id]};
+    const cart = JSON.parse(localStorage.getItem('cart'));
+    product.qt = 1;
+    const newCart = [...cart, product];
+    localStorage.setItem('cart', JSON.stringify(newCart))
+    this.treatItems(newCart)
+    store.dispatch(updateCartLength(newCart.length))
   }
 
   renderAttributes = (attr, k, item) => {
@@ -73,7 +86,6 @@ class ItemsInCart extends Component {
   render() {
     const { itemsQt, currentCurrency } = this.props;
     const { items } = this.state;
-    console.log(items);
     return (
       <div>
         <div className="cart-preview-title">
@@ -99,11 +111,18 @@ class ItemsInCart extends Component {
                   ))}
                 </div>
                 <div className="quantity-container">
-                  <button>
+                  <button
+                    type="button"
+                    id={i}
+                    onClick={ this.sumProduct }
+                  >
                     +
                   </button>
                   <span>{item.qt}</span>
-                  <button>
+                  <button
+                    type="button"
+                    onClick={ this.subProduct }
+                  >
                     -
                   </button>
                 </div>
