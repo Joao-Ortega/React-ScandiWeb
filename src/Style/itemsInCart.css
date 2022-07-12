@@ -14,7 +14,7 @@
 .items-container {
   display: flex;
   flex-direction: column;
-  align-content:space-between;
+  align-content: space-between;
 }
 
 .item-infos {
@@ -114,4 +114,43 @@
 .product-img-cart {
   height: 150px;
   width: 150px;
+}
+
+#total-container {
+  align-items: center;
+  /* border: 1px solid black; */
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 3%;
+  width: 355px;
+}
+
+.total-price {
+  font-family: "Roboto" sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 18px;
+}
+
+.cart-btns {
+  cursor: pointer;
+  font-family: "Raleway" sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 120%;
+  padding: 3%;
+  width: 35%;
+}
+
+#page-cart-btn {
+  background-color: white;
+  border: 1px solid #1d1f22;
+}
+
+#checkout-btn {
+  background-color: #5ece7b;
+  border: 1px solid #5ece7b;
+  color: #FFFFFF;
 }

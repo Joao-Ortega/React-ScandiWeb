@@ -13,20 +13,27 @@ class ItemsInCart extends Component {
   componentDidMount() {
     const items = JSON.parse(localStorage.getItem('cart'));
     if (items) {
-      const treatedItems = items.reduce((acc, item) => {
-        const findObj = acc.filter((obj) => obj.id === item.id);
-        if (findObj.length) {
-          if (findObj.some((elem) => JSON.stringify(elem.selectedTraits) === JSON.stringify(item.selectedTraits))) {
-            const foundedIndex = acc.findIndex(
-              (pr) => pr.id === item.id && JSON.stringify(pr.selectedTraits) === JSON.stringify(item.selectedTraits)
-            );
-            acc[foundedIndex].qt += 1
-          } else acc.push(item)
+      this.treatItems(items)
+    }   
+  }
+
+  compareAttributes = (attr1, attr2) => JSON.stringify(attr1) === JSON.stringify(attr2);
+
+  isEqual = (element1, element2 ) => element1 === element2; 
+
+  treatItems = (cart) => {
+    const treatedItems = cart.reduce((acc, item) => {
+      const findObj = acc.filter((obj) => this.isEqual(obj.id, item.id));
+      if (findObj.length) {
+        const sameAttrs = findObj.some((elem) => this.compareAttributes(elem.selectedTraits, item.selectedTraits))
+        if (sameAttrs) {
+          const foundedIndex = acc.findIndex((pr) => this.isEqual(pr.id, item.id) && sameAttrs);
+          acc[foundedIndex].qt += 1
         } else acc.push(item)
-        return acc;
-      }, []);
-      this.setState({ items: treatedItems })
-    }
+      } else acc.push(item)
+      return acc;
+    }, []);
+    this.setState({ items: treatedItems })
   }
 
   renderAttributes = (attr, k, item) => {
@@ -106,6 +113,26 @@ class ItemsInCart extends Component {
               </div>
               </div>
           )) }
+        </div>
+        <div id="total-container">
+          <span className="total-price">Total</span>
+          <span className="total-price">$3000</span>
+        </div>
+        <div>
+          <button
+            type="button"
+            className="cart-btns"
+            id="page-cart-btn"
+          >
+            VIEW BAG
+          </button>
+          <button
+            type="button"
+            className="cart-btns"
+            id="checkout-btn"
+          >
+            CHECKOUT
+          </button>
         </div>
       </div>
     )
