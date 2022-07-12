@@ -6,24 +6,39 @@ class ItemsInCart extends Component {
     super();
     this.state = {
       items: [],
+      attrSelected: [],
     };
   };
 
   componentDidMount() {
     const items = JSON.parse(localStorage.getItem('cart'));
     if (items) {
-      this.setState({ items })
+      const treatedItems = items.reduce((acc, item) => {
+        const findObj = acc.filter((obj) => obj.id === item.id);
+        if (findObj.length) {
+          if (findObj.some((elem) => JSON.stringify(elem.selectedTraits) === JSON.stringify(item.selectedTraits))) {
+            const foundedIndex = acc.findIndex(
+              (pr) => pr.id === item.id && JSON.stringify(pr.selectedTraits) === JSON.stringify(item.selectedTraits)
+            );
+            acc[foundedIndex].qt += 1
+          } else acc.push(item)
+        } else acc.push(item)
+        return acc;
+      }, []);
+      this.setState({ items: treatedItems })
     }
   }
 
-  renderAttributes = (attr, k) => {
+  renderAttributes = (attr, k, item) => {
+    const newList = [];
+    newList[item[attr.name]] = 'choosed';
     if (attr.name === 'Color') {
       return (
         <div className="attributes" key={k}>
           {attr.items.map(({ value }, i) => (
           <div
             key={i}
-            className="colors-cart"
+            className={`colors-cart ${newList[i]}`}
             value={value}
             id={i}
             style={{ backgroundColor: value }}
@@ -36,7 +51,7 @@ class ItemsInCart extends Component {
       <div className="attributes" key={k}>
         {attr.items.map(({ value }, i) => (
         <div
-          className="attrs-cart"
+          className={`attrs-cart ${newList[i]}`}
           id={i}
           value={value}
           key={value}
@@ -51,6 +66,7 @@ class ItemsInCart extends Component {
   render() {
     const { itemsQt, currentCurrency } = this.props;
     const { items } = this.state;
+    console.log(items);
     return (
       <div>
         <div className="cart-preview-title">
@@ -71,7 +87,7 @@ class ItemsInCart extends Component {
                   {item.attributes.map((attrObj, k) => (
                     <div key={k}>
                       <span className="attr-name">{attrObj.name}:</span>
-                      {this.renderAttributes(attrObj, k)}
+                      {this.renderAttributes(attrObj, k, item.selectedTraits)}
                     </div>
                   ))}
                 </div>
@@ -79,7 +95,7 @@ class ItemsInCart extends Component {
                   <button>
                     +
                   </button>
-                  <span>1</span>
+                  <span>{item.qt}</span>
                   <button>
                     -
                   </button>

@@ -14,15 +14,21 @@ class ProductsCard extends Component {
     }
   }
 
-  handleAddition = ({ target }) => {
+  handleAdditionFromPLP = ({ target }) => {
     const { allProducts } = this.props;
     const { id, name, prices, attributes, gallery } = allProducts.find((item) => item.id === target.id);
+    let choosedAttr = {}
+    attributes.forEach((obj) => {
+      choosedAttr[obj.name] = 0
+    });
     const objToLocal = {
       id,
       name,
       prices,
       attributes,
+      qt: 1,
       gallery: gallery[0],
+      selectedTraits: choosedAttr, 
     }
     const isEmpty = JSON.parse(localStorage.getItem('cart'));
     if (!isEmpty) {
@@ -53,7 +59,7 @@ class ProductsCard extends Component {
             <button
               type="button"
               className="addCartBtn"
-              onClick={ this.handleAddition }
+              onClick={ this.handleAdditionFromPLP }
             >
               <img id={id} src={addToCartBtn} alt="add to cart button"  />
             </button>
