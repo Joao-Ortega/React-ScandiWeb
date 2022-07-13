@@ -13,40 +13,35 @@ class ItemsInCart extends Component {
   };
 
   componentDidMount() {
-    const items = JSON.parse(localStorage.getItem('cart'));
-    if (items) {
-      this.treatItems(items)
+    const cart = JSON.parse(localStorage.getItem('cart'));
+    if (cart) {
+      this.setState({ items: cart })
+      // this.treatItems(cart)
     }   
   }
 
-  compareAttributes = (attr1, attr2) => JSON.stringify(attr1) === JSON.stringify(attr2);
-
-  isEqual = (element1, element2 ) => element1 === element2; 
-
-  treatItems = (cart) => {
-    const treatedItems = cart.reduce((acc, item) => {
-      const findObj = acc.filter((obj) => this.isEqual(obj.id, item.id));
-      if (findObj.length) {
-        const sameAttrs = findObj.some((elem) => this.compareAttributes(elem.selectedTraits, item.selectedTraits))
-        if (sameAttrs) {
-          const foundedIndex = acc.findIndex((pr) => this.isEqual(pr.id, item.id) && sameAttrs);
-          acc[foundedIndex].qt += 1
-        } else acc.push(item)
-      } else acc.push(item)
-      return acc;
-    }, []);
-    this.setState({ items: treatedItems })
+  sumProduct = ({ target: { name } }) => {
+    const cart = JSON.parse(localStorage.getItem('cart'));
+    cart[name].qt += 1;
+    localStorage.setItem('cart', JSON.stringify(cart))
+    this.setState({ items: cart })
+    store.dispatch(updateCartLength(cart.reduce((acc, item) => acc += item.qt, 0)))
   }
 
-  sumProduct = ({ target: { id } }) => {
-    const { items } = this.state;
-    const product = {...items[id]};
+  subProduct = ({ target: { name } }) => {
     const cart = JSON.parse(localStorage.getItem('cart'));
-    product.qt = 1;
-    const newCart = [...cart, product];
-    localStorage.setItem('cart', JSON.stringify(newCart))
-    this.treatItems(newCart)
-    store.dispatch(updateCartLength(newCart.length))
+    const nextQuantity = cart[name].qt;
+    if (nextQuantity - 1 === 0) {
+      const newCart = cart.filter((item) => item.id !== cart[name].id);
+      localStorage.setItem('cart', JSON.stringify(newCart));
+      this.setState({ items: newCart });
+      store.dispatch(updateCartLength(newCart.reduce((acc, item) => acc += item.qt, 0)))
+    } else {
+      cart[name].qt -= 1;
+      localStorage.setItem('cart', JSON.stringify(cart));
+      this.setState({ items: cart });
+      store.dispatch(updateCartLength(cart.reduce((acc, item) => acc += item.qt, 0)));
+    }
   }
 
   renderAttributes = (attr, k, item) => {
@@ -113,7 +108,7 @@ class ItemsInCart extends Component {
                 <div className="quantity-container">
                   <button
                     type="button"
-                    id={i}
+                    name={i}
                     onClick={ this.sumProduct }
                   >
                     +
@@ -121,6 +116,7 @@ class ItemsInCart extends Component {
                   <span>{item.qt}</span>
                   <button
                     type="button"
+                    name={i}
                     onClick={ this.subProduct }
                   >
                     -
@@ -135,7 +131,12 @@ class ItemsInCart extends Component {
         </div>
         <div id="total-container">
           <span className="total-price">Total</span>
-          <span className="total-price">$3000</span>
+          <span
+            className="total-price"
+          >
+            {`${currentCurrency}${items.reduce((acc, pr) => acc += (pr.prices
+                  .find((tag) => tag.currency.symbol === currentCurrency).amount * pr.qt) , 0).toFixed(2)}`}
+          </span>
         </div>
         <div>
           <button

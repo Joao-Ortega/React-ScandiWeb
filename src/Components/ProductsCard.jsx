@@ -14,6 +14,23 @@ class ProductsCard extends Component {
     }
   }
 
+  compareAttributes = (attr1, attr2) => JSON.stringify(attr1) === JSON.stringify(attr2);
+
+  isEqual = (element1, element2 ) => element1 === element2; 
+
+  handleProductsOnLocal = (cart, product) => {
+      const findObj = cart.filter((obj) => this.isEqual(obj.id, product.id));
+      if (findObj.length) {
+        const sameAttrs = findObj.some((elem) => this.compareAttributes(elem.selectedTraits, product.selectedTraits))
+        if (sameAttrs) {
+          const foundedIndex = cart.findIndex((pr) => this.isEqual(pr.id, product.id) && sameAttrs);
+          cart[foundedIndex].qt += 1
+        } else cart.push(product)
+      } else cart.push(product)
+    store.dispatch(updateCartLength(cart.reduce((acc, item) => acc += item.qt, 0)))
+    localStorage.setItem('cart', JSON.stringify(cart))
+  }
+
   handleAdditionFromPLP = ({ target }) => {
     const { allProducts } = this.props;
     const { id, name, prices, attributes, gallery } = allProducts.find((item) => item.id === target.id);
@@ -30,13 +47,12 @@ class ProductsCard extends Component {
       gallery: gallery[0],
       selectedTraits: choosedAttr, 
     }
-    const isEmpty = JSON.parse(localStorage.getItem('cart'));
-    if (!isEmpty) {
+    const cart = JSON.parse(localStorage.getItem('cart'));
+    if (!cart) {
       store.dispatch(updateCartLength([objToLocal].length))
       localStorage.setItem('cart', JSON.stringify([objToLocal]))
     } else {
-      store.dispatch(updateCartLength([...isEmpty, objToLocal].length))
-      localStorage.setItem('cart', JSON.stringify([...isEmpty, objToLocal]))
+      this.handleProductsOnLocal(cart, objToLocal)
     }
   }
 
