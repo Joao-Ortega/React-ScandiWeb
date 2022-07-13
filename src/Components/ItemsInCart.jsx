@@ -90,14 +90,14 @@ class ItemsInCart extends Component {
         <div className="items-container">
           { items.map((item, i) => (
             <div key={i} className="item-infos">
-              <span className="product-name">{item.id}</span>
-              <span className="product-name">{item.name}</span>
-              <span className="price-cart">
-                {`${currentCurrency} ${item.prices
-                  .find((tag) => tag.currency.symbol === currentCurrency).amount}`}
-              </span>
               <div className="container">
                 <div className="cart">
+                  <span className="product-name">{item.id}</span>
+                  <span className="product-name">{item.name}</span>
+                  <span className="price-cart">
+                    {`${currentCurrency} ${item.prices
+                      .find((tag) => tag.currency.symbol === currentCurrency).amount}`}
+                  </span>
                   {item.attributes.map((attrObj, k) => (
                     <div key={k}>
                       <span className="attr-name">{attrObj.name}:</span>
@@ -138,7 +138,7 @@ class ItemsInCart extends Component {
                   .find((tag) => tag.currency.symbol === currentCurrency).amount * pr.qt) , 0).toFixed(2)}`}
           </span>
         </div>
-        <div>
+        <div className='btns-container'>
           <button
             type="button"
             className="cart-btns"

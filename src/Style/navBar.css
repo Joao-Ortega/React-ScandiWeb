@@ -97,7 +97,7 @@
   left: -7px;
 }
 
-.test {
+.preview-container {
   position: relative;
 }
 
@@ -107,7 +107,7 @@
   /* border: 1px solid green; */
   display: flex;
   flex-direction: column;
-  height: 750px;
+  height: 3000%;
   /* justify-content: space-evenly; */
   min-width: 385px;
   overflow: scroll;

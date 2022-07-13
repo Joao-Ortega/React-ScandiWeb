@@ -115,7 +115,7 @@ class NavBarComp extends Component {
               </div>
             )}
           </div>
-          <div className="test">
+          <div className="preview-container">
             <button
               type="button"
               className="cart-icon-btn"
