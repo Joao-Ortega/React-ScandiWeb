@@ -5,6 +5,9 @@ import { client } from '..';
 import { Markup } from 'interweave';
 import AttrsComp from '../Components/AttrsComp';
 import NavBarComp from '../Components/NavBarComp';
+import { store } from '../store/store';
+import { updateCartLength } from '../Reducers/cartSlice';
+import { handleProductsOnLocal } from '../Services/handleProductsOnLocal';
 
 class PDP extends Component {
   constructor() {
@@ -53,6 +56,35 @@ class PDP extends Component {
       );
   };
 
+  handleAdditionFromPDP = () => {
+    const { productClicked: {
+      id, name, prices, attributes, gallery,
+    } } = this.state;
+    const currentAttr = JSON.parse(localStorage.getItem('currentAttrs'));
+    const keys = Object.keys(currentAttr[name]);
+    const values = Object.values(currentAttr[name]);
+    const buildObj = keys.reduce((acc, key, i) => {
+      acc[key] = Number(values[i]);
+      return acc;
+    }, {})
+    const objToLocal = {
+      id,
+      name,
+      prices,
+      attributes,
+      qt: 1,
+      gallery: gallery[0],
+      selectedTraits: buildObj,
+    }
+    const cart = JSON.parse(localStorage.getItem('cart'));
+    if (!cart) {
+      store.dispatch(updateCartLength([objToLocal].length))
+      localStorage.setItem('cart', JSON.stringify([objToLocal]))
+    } else {
+      handleProductsOnLocal(cart, objToLocal)
+    }
+  }
+
   changePicture = ({ target: { name } }) => {
     this.setState({ currentImg: Number(name) });
   };
@@ -98,16 +130,26 @@ class PDP extends Component {
                   <AttrsComp
                     attribute={attr.name}
                     items={attr.items}
-                    prices={productClicked.prices}
+                    productName={productClicked.name}
                   />
                 </div>
               ))}
-            <span className="attr-names">{productClicked.prices && productClicked.prices[0].__typename}:</span>
+            <span
+              className="attr-names"
+            >
+              {productClicked.prices && productClicked.prices[0].__typename}:
+            </span>
             <div className="price">
               {`${currency} ${productClicked.prices && productClicked.prices
                 .find((obj) => obj.currency.symbol === currency).amount}`}
             </div>
-            <button type="button" className="add-btn">ADD TO CART</button>
+            <button
+              type="button"
+              className="add-btn"
+              onClick={ this.handleAdditionFromPDP }
+            >
+              ADD TO CART
+            </button>
             <div className="description">
               {productClicked.description && (
                 <Markup content={productClicked.description} />

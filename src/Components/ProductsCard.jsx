@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import addToCartBtn from '../Images/addToCart.svg';
 import { updateCartLength } from '../Reducers/cartSlice';
 import { setCurrency } from '../Reducers/currenciesSlice';
+import { handleProductsOnLocal } from '../Services/handleProductsOnLocal';
 import { store } from '../store/store';
 
 class ProductsCard extends Component {
@@ -12,23 +13,6 @@ class ProductsCard extends Component {
     if (exchange) {
       store.dispatch(setCurrency(exchange))
     }
-  }
-
-  compareAttributes = (attr1, attr2) => JSON.stringify(attr1) === JSON.stringify(attr2);
-
-  isEqual = (element1, element2 ) => element1 === element2; 
-
-  handleProductsOnLocal = (cart, product) => {
-      const findObj = cart.filter((obj) => this.isEqual(obj.id, product.id));
-      if (findObj.length) {
-        const sameAttrs = findObj.some((elem) => this.compareAttributes(elem.selectedTraits, product.selectedTraits))
-        if (sameAttrs) {
-          const foundedIndex = cart.findIndex((pr) => this.isEqual(pr.id, product.id) && sameAttrs);
-          cart[foundedIndex].qt += 1
-        } else cart.push(product)
-      } else cart.push(product)
-    store.dispatch(updateCartLength(cart.reduce((acc, item) => acc += item.qt, 0)))
-    localStorage.setItem('cart', JSON.stringify(cart))
   }
 
   handleAdditionFromPLP = ({ target }) => {
@@ -52,7 +36,7 @@ class ProductsCard extends Component {
       store.dispatch(updateCartLength([objToLocal].length))
       localStorage.setItem('cart', JSON.stringify([objToLocal]))
     } else {
-      this.handleProductsOnLocal(cart, objToLocal)
+      handleProductsOnLocal(cart, objToLocal)
     }
   }
 

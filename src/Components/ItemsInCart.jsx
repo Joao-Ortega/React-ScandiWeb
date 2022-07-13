@@ -16,7 +16,6 @@ class ItemsInCart extends Component {
     const cart = JSON.parse(localStorage.getItem('cart'));
     if (cart) {
       this.setState({ items: cart })
-      // this.treatItems(cart)
     }   
   }
 
@@ -32,10 +31,10 @@ class ItemsInCart extends Component {
     const cart = JSON.parse(localStorage.getItem('cart'));
     const nextQuantity = cart[name].qt;
     if (nextQuantity - 1 === 0) {
-      const newCart = cart.filter((item) => item.id !== cart[name].id);
-      localStorage.setItem('cart', JSON.stringify(newCart));
-      this.setState({ items: newCart });
-      store.dispatch(updateCartLength(newCart.reduce((acc, item) => acc += item.qt, 0)))
+      cart.splice(name, 1);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      this.setState({ items: cart });
+      store.dispatch(updateCartLength(cart.reduce((acc, item) => acc += item.qt, 0)))
     } else {
       cart[name].qt -= 1;
       localStorage.setItem('cart', JSON.stringify(cart));
