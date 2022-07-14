@@ -10,6 +10,7 @@ class ItemsInCart extends Component {
     this.state = {
       items: [],
       attrSelected: [],
+      reload: false,
     };
   };
 
@@ -19,6 +20,16 @@ class ItemsInCart extends Component {
       this.setState({ items: cart })
     }   
   }
+
+  // componentDidUpdate(prevProps) {
+  //   const { cartLength, fullCart } = this.props;
+  //   console.log(prevProps.cartLength, cartLength);
+  //   if (cartLength !== prevProps.cartLength) {
+  //     if (fullCart) {
+  //       this.setState({ reload: true })
+  //     }
+  //   }
+  // }
 
   sumProduct = ({ target: { name } }) => {
     const cart = JSON.parse(localStorage.getItem('cart'));
@@ -178,6 +189,7 @@ class ItemsInCart extends Component {
 
 const mapStateToProps = (state) => ({
   currentCurrency: state.currencies.currCurrency,
+  cartLength: state.cart.cartSize,
 });
 
 export default connect(mapStateToProps)(ItemsInCart);

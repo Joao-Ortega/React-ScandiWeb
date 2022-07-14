@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import logo from '../Images/a-logo.svg';
 import cart from '../Images/cart.svg';
 import arrowDown from '../Images/Vector.svg';
@@ -16,6 +17,7 @@ class NavBarComp extends Component {
       currentCurrencie: '$',
       cartItems: 0,
       cartOverlay: false,
+      path: '',
     };
   }
 
@@ -27,6 +29,7 @@ class NavBarComp extends Component {
     } else {
       this.setState({ currentCurrencie: selectedCurrency })
     }
+    this.setState({ path: window.location.pathname })
   }
 
   changeCurrency = () => {
@@ -61,7 +64,10 @@ class NavBarComp extends Component {
 
   showPreview = () => {
     const { cartOverlay } = this.state;
-    this.setState({ cartOverlay: !cartOverlay, isClicked: false })
+    const { changeOpacity } = this.props;
+    this.setState({
+      cartOverlay: !cartOverlay, isClicked: false,
+    }, changeOpacity)
   }
 
   render() {
@@ -69,8 +75,9 @@ class NavBarComp extends Component {
       arrCurrencies: { currencies },
       arrCategories: { categories },
       cartLength,
+      changeOpacity,
     } = this.props;
-    const { btnsClasses, isClicked, currentCurrencie, cartOverlay } = this.state;
+    const { btnsClasses, isClicked, currentCurrencie, cartOverlay, path } = this.state;
     return (
       <div className="navigation-bar">
         <div className="sections-container">
@@ -88,7 +95,9 @@ class NavBarComp extends Component {
             ))}
         </div>
         <div className="store-logo">
-          <img src={logo} alt="store logo" />
+          <Link to="/" >
+            <img src={logo} alt="store logo" />
+          </Link>
         </div>
         <div className="currencies-and-cart-container">
           <div className="select-currencies-container">
@@ -126,8 +135,11 @@ class NavBarComp extends Component {
                 <span className="cart-length" >{cartLength}</span>
               )}
             </button>
-            {cartOverlay && (
-              <div className="cart-preview">
+            {cartOverlay && path !== "/cart" && (
+              <div className="cart-preview" onMouseLeave={() => {
+                changeOpacity()
+                this.setState({cartOverlay: !cartOverlay})
+              }} >
                 <ItemsInCart itemsQt={cartLength} />
               </div>
             )}
