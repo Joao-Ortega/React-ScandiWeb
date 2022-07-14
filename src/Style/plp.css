@@ -64,6 +64,7 @@
   background-color: white;
   border: none;
   bottom: 10%;
+  cursor: pointer;
   position: relative;
   right: 6%;
 }

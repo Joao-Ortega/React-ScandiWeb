@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import addToCartBtn from '../Images/addToCart.svg';
+import { updateCartLength } from '../Reducers/cartSlice';
 import { setCurrency } from '../Reducers/currenciesSlice';
+import { handleProductsOnLocal } from '../Services/handleProductsOnLocal';
 import { store } from '../store/store';
 
 class ProductsCard extends Component {
@@ -10,6 +12,31 @@ class ProductsCard extends Component {
     const exchange = JSON.parse(localStorage.getItem('exchange'));
     if (exchange) {
       store.dispatch(setCurrency(exchange))
+    }
+  }
+
+  handleAdditionFromPLP = ({ target }) => {
+    const { allProducts } = this.props;
+    const { id, name, prices, attributes, gallery } = allProducts.find((item) => item.id === target.id);
+    let choosedAttr = {}
+    attributes.forEach((obj) => {
+      choosedAttr[obj.name] = 0
+    });
+    const objToLocal = {
+      id,
+      name,
+      prices,
+      attributes,
+      qt: 1,
+      gallery: gallery[0],
+      selectedTraits: choosedAttr, 
+    }
+    const cart = JSON.parse(localStorage.getItem('cart'));
+    if (!cart) {
+      store.dispatch(updateCartLength([objToLocal].length))
+      localStorage.setItem('cart', JSON.stringify([objToLocal]))
+    } else {
+      handleProductsOnLocal(cart, objToLocal)
     }
   }
 
@@ -29,8 +56,12 @@ class ProductsCard extends Component {
                   .find((tag) => tag.currency.symbol === currentCurrency).amount}` }
               </p>
             </Link>
-            <button className="addCartBtn">
-              <img src={addToCartBtn} alt="add to cart button"  />
+            <button
+              type="button"
+              className="addCartBtn"
+              onClick={ this.handleAdditionFromPLP }
+            >
+              <img id={id} src={addToCartBtn} alt="add to cart button"  />
             </button>
           </div> :
           <div className="product-card-out" key={ id }>

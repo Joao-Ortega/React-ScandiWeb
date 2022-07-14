@@ -43,8 +43,8 @@
   font-family: "Raleway" sans-serif;
   font-style: normal;
   font-size: 30px;
-  line-height: 35px;
-  margin-bottom: 9%;
+  /* line-height: 50px; */
+  margin-bottom: 5%;
 }
 
 .all-attr {
@@ -99,7 +99,7 @@
 
 .choosed {
   background-color: black;
-  border: 3px solid rgb(145, 143, 143);
+  border: 2px solid #5ECE7B;
   color: white;
 }
 

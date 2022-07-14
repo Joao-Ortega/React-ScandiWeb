@@ -10,20 +10,51 @@ class AttrsComp extends Component {
   }
 
   componentDidMount() {
-    const { attribute, items, prices } = this.props;
-    console.log(prices);
-    this.setState({ [attribute]: items[0].value })
+    const { attribute, productName } = this.props;
+    const obj = JSON.parse(localStorage.getItem('currentAttrs'));
+    if (!obj) {
+      localStorage.setItem('currentAttrs', JSON.stringify({
+        [productName]: {[attribute]: 0}
+      }))
+    } else {
+      if (obj[productName] && !obj[productName][attribute]) {
+        localStorage.setItem('currentAttrs', JSON.stringify({
+          ...obj,
+          [productName]: {...obj[productName], [attribute]: 0}
+        }))
+      } else if (obj[productName] && obj[productName][attribute]) {
+        localStorage.setItem('currentAttrs', JSON.stringify({
+          ...obj,
+          [productName]: { ...obj[productName] }
+        }))
+      } else {
+        localStorage.setItem('currentAttrs', JSON.stringify({
+          ...obj,
+          [productName]: { [attribute]: 0 }
+        }))
+      }
+    }
+    const newLocal = JSON.parse(localStorage.getItem('currentAttrs'));
+    const selecteds = [];
+    selecteds[newLocal[productName][attribute]] = 'choosed';
+    this.setState({ attrSelected: selecteds })
   }
 
   changeAttr = ({ target }) => {
-    const { attribute } = this.props;
-    const value = target.getAttribute('value');
+    const { attribute, productName } = this.props;
+    const attributesObj = JSON.parse(localStorage.getItem('currentAttrs'));
     const changeClass = []
     changeClass[target.id] = 'choosed'
     this.setState({
       attrSelected: changeClass,
-      [attribute]: value,
-    })
+      [attribute]: target.id,
+    });
+    if (!attributesObj) {
+      localStorage.setItem('currentAttrs', JSON.stringify({[productName]: { [attribute]: target.id }}))
+    } else {
+      attributesObj[productName][attribute] = target.id;
+      localStorage.setItem('currentAttrs', JSON.stringify(attributesObj))
+    }
   }
 
   renderAttributes = () => {

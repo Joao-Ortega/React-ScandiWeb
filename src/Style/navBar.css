@@ -1,7 +1,7 @@
 .sections-container {
   display: flex;
   justify-content: space-evenly;
-  width: 15%;
+  width: 18%;
 }
 
 .sections {
@@ -24,6 +24,7 @@
   background-color: white;
   border: none;
   font-size: 18px;
+  padding: 0;
 }
 
 #arrow-down {
@@ -45,6 +46,7 @@
 }
 
 .currencies-and-cart-container {
+  align-items: center;
   display: flex;
   justify-content: space-between;
   width: 5%;
@@ -54,8 +56,9 @@
   border: 1px solid rgb(216, 214, 214);
   display: flex;
   flex-direction: column;
-  position: fixed;
-  top: 6%;
+  position: absolute;
+  right: 13.5%;
+  top: 7%;
   width: 65px;
 }
 
@@ -69,7 +72,50 @@
   background-color: rgb(220, 218, 218);
 }
 
+.cart-icon-btn {
+  background-color: white;
+  border: none;
+  cursor: pointer;
+  min-width: 60px;
+  padding: 0;
+}
+
 .cart-img {
   height: 20px;
   width: 30px;
+}
+
+.cart-length {
+  background-color: black;
+  border-radius: 100%;
+  color: white;
+  font-size: 15px;
+  padding-left: 4px;
+  padding-right: 4px;
+  position: relative;
+  top: -11px;
+  left: -7px;
+}
+
+.preview-container {
+  position: relative;
+}
+
+.cart-preview {
+  align-items: center;
+  background-color: white;
+  /* border: 1px solid green; */
+  display: flex;
+  flex-direction: column;
+  height: 3000%;
+  /* justify-content: space-evenly; */
+  min-width: 385px;
+  overflow: scroll;
+  overflow-x:hidden ;
+  padding: 1% 0 0 20%;
+  position: absolute;
+  right: 15%;
+  top: 165%;
+  width: 385px;
+  z-index: 1;
 }

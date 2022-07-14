@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import logo from '../Images/a-logo.svg';
 import cart from '../Images/cart.svg';
 import arrowDown from '../Images/Vector.svg';
-// import { fetchCategories, fetchCurrencies } from '../thunks/fetchs';
 import { setCurrency } from '../Reducers/currenciesSlice';
 import { store } from '../store/store';
+import ItemsInCart from './ItemsInCart';
 
 class NavBarComp extends Component {
   constructor() {
@@ -13,14 +13,15 @@ class NavBarComp extends Component {
     this.state = {
       btnsClasses: ['selected'],
       isClicked: false,
-      currentCurrencie: '$'
+      currentCurrencie: '$',
+      cartItems: 0,
+      cartOverlay: false,
     };
   }
 
   componentDidMount() {
     const { selectedCurrency  } = this.props;
     const exchange = JSON.parse(localStorage.getItem('exchange'));
-    console.log(exchange);
     if (exchange) {
       this.setState({ currentCurrencie: exchange })  
     } else {
@@ -30,12 +31,8 @@ class NavBarComp extends Component {
 
   changeCurrency = () => {
     const { isClicked } = this.state;
-    this.setState({ isClicked: !isClicked });
+    this.setState({ isClicked: !isClicked, cartOverlay: false });
   };
-
-  // handleSymbol = ({ target }) => {
-  //   console.log(target.value);
-  // };
 
   currencyClick = ({ target: { id } }) => {
     this.setState({
@@ -47,23 +44,33 @@ class NavBarComp extends Component {
   }
 
   handleClick = ({ target }) => {
-    const { changeCategory } = this.props;
-    changeCategory(target.name);
-    const newClasses = [];
-    newClasses[target.value] = "selected";
-    this.setState({ btnsClasses: newClasses });
+    const currentLocation = window.location.href;
+    const MAIN_URL = 'http://localhost:3000/';
+    if (currentLocation === MAIN_URL) {
+      const { changeCategory } = this.props;
+      changeCategory(target.name);
+      const newClasses = [];
+      newClasses[target.value] = "selected";
+      this.setState({ btnsClasses: newClasses });
+    }
   };
 
   treatName = (str) => {
     return `${str.charAt(0).toUpperCase()}${str.slice(1)}`;
   };
 
+  showPreview = () => {
+    const { cartOverlay } = this.state;
+    this.setState({ cartOverlay: !cartOverlay, isClicked: false })
+  }
+
   render() {
     const {
       arrCurrencies: { currencies },
       arrCategories: { categories },
+      cartLength,
     } = this.props;
-    const { btnsClasses, isClicked, currentCurrencie } = this.state;
+    const { btnsClasses, isClicked, currentCurrencie, cartOverlay } = this.state;
     return (
       <div className="navigation-bar">
         <div className="sections-container">
@@ -108,8 +115,22 @@ class NavBarComp extends Component {
               </div>
             )}
           </div>
-          <div>
-            <img src={cart} alt="shopping cart" className="cart-img" />
+          <div className="preview-container">
+            <button
+              type="button"
+              className="cart-icon-btn"
+              onClick={ this.showPreview }
+            >
+              <img src={cart} alt="shopping cart" className="cart-img" />
+              {cartLength > 0 && (
+                <span className="cart-length" >{cartLength}</span>
+              )}
+            </button>
+            {cartOverlay && (
+              <div className="cart-preview">
+                <ItemsInCart itemsQt={cartLength} />
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -121,6 +142,7 @@ const mapStateToProps = (state) => ({
   arrCurrencies: state.currencies,
   selectedCurrency: state.currencies.currCurrency,
   arrCategories: state.categories,
+  cartLength: state.cart.cartSize,
 });
 
 export default connect(mapStateToProps)(NavBarComp);
