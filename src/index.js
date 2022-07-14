@@ -8,6 +8,7 @@ import './Style/navBar.css'
 import './Style/plp.css';
 import './Style/pdp.css';
 import './Style/itemsInCart.css';
+import './Style/cart.css';
 import { BrowserRouter } from 'react-router-dom';
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 

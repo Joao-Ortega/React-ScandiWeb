@@ -32,7 +32,7 @@
 }
 
 .name-id {
-  font-family: "Raleway" sans-serif;
+  font-family: "Raleway", sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 30px;
@@ -40,7 +40,7 @@
 }
 
 .product-name {
-  font-family: "Raleway" sans-serif;
+  font-family: "Raleway", sans-serif;
   font-style: normal;
   font-size: 30px;
   /* line-height: 50px; */
@@ -55,7 +55,7 @@
 }
 
 .attr-names {
-  font-family: "Roboto Condensed" sans-serif;
+  font-family: "Roboto Condensed", sans-serif;
   font-style: normal;
   font-weight: 600;
   font-size: 22px;
@@ -77,7 +77,7 @@
   border: 1px solid black;
   cursor: pointer;
   display: flex;
-  font-family: "Source Sans Pro" sans-serif;
+  font-family: "Source Sans Pro", sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -104,7 +104,7 @@
 }
 
 .price {
-  font-family: "Raleway" sans-serif;
+  font-family: "Raleway", sans-serif;
   font-style: normal;
   font-weight: 600;
   font-size: 24px;
@@ -116,7 +116,7 @@
   border: none;
   color: white;
   cursor: pointer;
-  font-family: "Raleway" sans-serif;
+  font-family: "Raleway", sans-serif;
   font-style: normal;
   font-weight: 600;
   font-size: 16px;
@@ -128,7 +128,7 @@
 }
 
 .description {
-  font-family: "Roboto" sans-serif;
+  font-family: "Roboto", sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
