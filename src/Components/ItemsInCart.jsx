@@ -127,17 +127,31 @@ class ItemsInCart extends Component {
                     -
                   </button>
                 </div>
-                <div className="container-img">
+                <div className={ fullCart ? "container-img-on-cart" : "container-img"}>
                   <img className={ fullCart ? "img-on-cart" : "product-img-cart"} src={item.gallery} alt="product" />
                 </div>
               </div>
               </div>
           )) }
         </div>
-        <div id="total-container">
-          <span className="total-price">Total</span>
+        <div id={ fullCart ? "total-cart" : "total-container"}>
+          { fullCart && (
+            <div className="taxes">
+              <div className="infos-checkout">
+                <span className="span-text">Tax 21%:</span>
+                <span className="total-value">{`${currentCurrency}${(items
+                  .reduce((acc, pr) => acc += (pr.prices
+                  .find((tag) => tag.currency.symbol === currentCurrency).amount * pr.qt) , 0) * 0.21).toFixed(2)}`}</span>
+              </div>
+              <div className="infos-checkout">
+                <span className="span-text">Quantity:</span>
+                <span className="total-value">{ items.reduce((acc, item) => acc += item.qt , 0) }</span>
+              </div>
+            </div>
+          ) }
+          <span className={ fullCart ? "span-text" : "total-price"}>Total:</span>
           <span
-            className="total-price"
+            className={ fullCart ? "total-value" : "total-price"}
           >
             {`${currentCurrency}${items.reduce((acc, pr) => acc += (pr.prices
                   .find((tag) => tag.currency.symbol === currentCurrency).amount * pr.qt) , 0).toFixed(2)}`}

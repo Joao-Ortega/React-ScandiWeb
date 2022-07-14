@@ -52,7 +52,7 @@
   display: flex;
   height: 25%;
   margin-bottom: 1px;
-  width: 28%;
+  width: 22%;
 }
 
 .name-on-cart-bolder {
@@ -92,7 +92,7 @@
   align-items: center;
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: 110%;
   justify-content: space-evenly;
   /* text-align: center; */
   width: 50px;
@@ -100,9 +100,9 @@
 
 .qt-btns {
   background-color: white;
-  font-size: 35px;
+  font-size: 30px;
   text-align: center;
-  width: 45px;
+  width: 40px;
 }
 
 .qt-number {
@@ -113,8 +113,49 @@
   line-height: 160%;
 }
 
+.container-img-on-cart {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
 .img-on-cart {
-  /* border: 2px solid black; */
+  border: 1px solid rgba(193, 193, 193, 0.228);
   height: 235px;
   width: 210px;
+}
+
+#total-cart {
+  align-self: flex-start;
+  margin: 2% 0;
+}
+
+.span-text {
+  font-family: "Raleway", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 28px;
+  margin-right: 10%;
+}
+
+.total-value {
+  font-family: "Raleway", sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 24px;
+}
+
+.taxes {
+  display: flex;
+  flex-direction: column;
+}
+
+
+.infos-checkout {
+  /* padding: 5% 0;
+   */
+   margin-bottom: 10%;
+  width: 115%;
 }
