@@ -157,7 +157,7 @@ class ItemsInCart extends Component {
                   .find((tag) => tag.currency.symbol === currentCurrency).amount * pr.qt) , 0).toFixed(2)}`}
           </span>
         </div>
-        <div className='btns-container'>
+        <div className={ fullCart ? "order-container" : "btns-container"}>
         { !fullCart && (
           <Link to="/cart" className="cart-link">
               VIEW BAG
@@ -165,10 +165,10 @@ class ItemsInCart extends Component {
         ) }
           <button
             type="button"
-            className="cart-btns"
+            className={ fullCart ? "order-btn" : "cart-btns"}
             id="checkout-btn"
           >
-            CHECKOUT
+            {fullCart ? 'ORDER' : 'CHECKOUT'}
           </button>
         </div>
       </div>

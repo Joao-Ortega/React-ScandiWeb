@@ -152,10 +152,29 @@
   flex-direction: column;
 }
 
-
 .infos-checkout {
-  /* padding: 5% 0;
-   */
-   margin-bottom: 10%;
+  margin-bottom: 10%;
   width: 115%;
+}
+
+.order-container {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.order-btn {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  font-family: "Raleway", sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  height: 40px;
+  justify-content: center;
+  line-height: 120%;
+  margin-bottom: 5%;
+  padding: 1.5%;
+  width: 279px;
 }
