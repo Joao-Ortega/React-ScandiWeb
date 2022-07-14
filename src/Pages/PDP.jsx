@@ -61,12 +61,15 @@ class PDP extends Component {
       id, name, prices, attributes, gallery,
     } } = this.state;
     const currentAttr = JSON.parse(localStorage.getItem('currentAttrs'));
-    const keys = Object.keys(currentAttr[name]);
-    const values = Object.values(currentAttr[name]);
-    const buildObj = keys.reduce((acc, key, i) => {
-      acc[key] = Number(values[i]);
-      return acc;
-    }, {})
+    let buildObj = {}
+    if (currentAttr && currentAttr[name]) {
+      const keys = Object.keys(currentAttr[name]);
+      const values = Object.values(currentAttr[name]);
+      buildObj = keys.reduce((acc, key, i) => {
+        acc[key] = Number(values[i]);
+        return acc;
+      }, {})
+    }
     const objToLocal = {
       id,
       name,

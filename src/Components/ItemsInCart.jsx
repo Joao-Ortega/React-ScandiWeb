@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { updateCartLength } from '../Reducers/cartSlice';
 import { store } from '../store/store';
 
@@ -138,13 +139,9 @@ class ItemsInCart extends Component {
           </span>
         </div>
         <div className='btns-container'>
-          <button
-            type="button"
-            className="cart-btns"
-            id="page-cart-btn"
-          >
-            VIEW BAG
-          </button>
+          <Link to="/cart" className="cart-link">
+              VIEW BAG
+          </Link>
           <button
             type="button"
             className="cart-btns"

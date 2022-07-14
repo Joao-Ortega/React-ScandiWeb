@@ -127,6 +127,18 @@
   font-weight: 500;
   font-size: 16px;
   line-height: 18px;
+  margin: 0 5%
+}
+
+.cart-link {
+  border: 1.5px solid black;
+  color: black;
+  font-family: "Raleway" sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  padding: 3.2% 6%;
 }
 
 .btns-container {
