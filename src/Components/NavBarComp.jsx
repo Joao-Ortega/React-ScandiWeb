@@ -32,9 +32,17 @@ class NavBarComp extends Component {
     this.setState({ path: window.location.pathname })
   }
 
+
   changeCurrency = () => {
-    const { isClicked } = this.state;
-    this.setState({ isClicked: !isClicked, cartOverlay: false });
+    const { isClicked, cartOverlay } = this.state;
+    const { changeOpacity } = this.props;
+    this.setState({
+      isClicked: !isClicked, cartOverlay: false,
+    });
+    console.log(cartOverlay);
+    if (cartOverlay) {
+      changeOpacity()
+    }
   };
 
   currencyClick = ({ target: { id } }) => {
@@ -70,6 +78,15 @@ class NavBarComp extends Component {
     }, changeOpacity)
   }
 
+  hideCartOverlay = () => {
+    const { cartOverlay } = this.state;
+    const { changeOpacity } = this.props;
+    if (cartOverlay) {
+      this.setState({cartOverlay: false});
+      changeOpacity()
+    }
+  }
+
   render() {
     const {
       arrCurrencies: { currencies },
@@ -79,7 +96,13 @@ class NavBarComp extends Component {
     } = this.props;
     const { btnsClasses, isClicked, currentCurrencie, cartOverlay, path } = this.state;
     return (
-      <div className="navigation-bar">
+      <div
+        className="navigation-bar"
+        // onClick={ this.hideCartOverlay }
+      >
+        <div>
+          
+        </div>
         <div className="sections-container">
           {categories &&
             categories.map(({ name }, i) => (
@@ -136,10 +159,13 @@ class NavBarComp extends Component {
               )}
             </button>
             {cartOverlay && path !== "/cart" && (
-              <div className="cart-preview" onMouseLeave={() => {
-                changeOpacity()
-                this.setState({cartOverlay: !cartOverlay})
-              }} >
+              <div
+                className="cart-preview"
+                onMouseLeave={ () => {
+                  this.setState({ cartOverlay: false })
+                  changeOpacity()
+                }}
+              >
                 <ItemsInCart itemsQt={cartLength} />
               </div>
             )}

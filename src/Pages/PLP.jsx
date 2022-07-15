@@ -44,13 +44,16 @@ class PLP extends Component {
     const { opacity } = this.state;
     this.setState({ opacity: !opacity })
   }
+  
 
   render() {
     const { currentCategory, listOfProducts, opacity } = this.state;
     return (
       <div>
         <NavBarComp changeOpacity={this.changeOpacity} changeCategory={this.handleCategoryChange} />
-        <div className={ opacity && "opacity" } >
+        <div
+          className={ opacity ? "opacity" : "" }
+        >
           <h1 className="title">{currentCategory}</h1>
           { listOfProducts && (
             <ProductsCard allProducts={ listOfProducts } />
