@@ -1,5 +1,4 @@
 .product-detail-container {
-  /* border: 1px solid black; */
   display: flex;
   justify-content: space-evenly;
   min-height: 90vh;
@@ -43,7 +42,6 @@
   font-family: "Raleway", sans-serif;
   font-style: normal;
   font-size: 30px;
-  /* line-height: 50px; */
   margin-bottom: 5%;
 }
 
@@ -65,7 +63,6 @@
 
 .attr-container {
   align-items: center;
-  /* border: 1px solid red; */
   display: flex;
   height: 80%;
   justify-content: space-evenly;
