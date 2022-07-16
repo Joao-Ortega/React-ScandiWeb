@@ -21,16 +21,6 @@ class ItemsInCart extends Component {
     }   
   }
 
-  // componentDidUpdate(prevProps) {
-  //   const { cartLength, fullCart } = this.props;
-  //   console.log(prevProps.cartLength, cartLength);
-  //   if (cartLength !== prevProps.cartLength) {
-  //     if (fullCart) {
-  //       this.setState({ reload: true })
-  //     }
-  //   }
-  // }
-
   sumProduct = ({ target: { name } }) => {
     const cart = JSON.parse(localStorage.getItem('cart'));
     cart[name].qt += 1;
@@ -145,14 +135,21 @@ class ItemsInCart extends Component {
               </div>
           )) }
         </div>
-        <div id={ fullCart ? "total-cart" : "total-container"}>
+        <div
+          id={ fullCart ? "total-cart" : "total-container"}
+        >
           { fullCart && (
             <div className="taxes">
               <div className="infos-checkout">
                 <span className="span-text">Tax 21%:</span>
-                <span className="total-value">{`${currentCurrency}${(items
+                <span
+                  className="total-value"
+                >
+                  {`${currentCurrency}${(items
                   .reduce((acc, pr) => acc += (pr.prices
-                  .find((tag) => tag.currency.symbol === currentCurrency).amount * pr.qt) , 0) * 0.21).toFixed(2)}`}</span>
+                  .find((tag) => tag.currency.symbol === currentCurrency).amount * pr.qt) , 0) * 0.21).toFixed(2)}
+                  `}
+                </span>
               </div>
               <div className="infos-checkout">
                 <span className="span-text">Quantity:</span>

@@ -34,13 +34,12 @@ class NavBarComp extends Component {
 
 
   changeCurrency = () => {
-    const { isClicked, cartOverlay } = this.state;
+    const { isClicked, cartOverlay, path } = this.state;
     const { changeOpacity } = this.props;
     this.setState({
       isClicked: !isClicked, cartOverlay: false,
     });
-    console.log(cartOverlay);
-    if (cartOverlay) {
+    if (cartOverlay && path !== '/cart') {
       changeOpacity()
     }
   };
@@ -98,11 +97,7 @@ class NavBarComp extends Component {
     return (
       <div
         className="navigation-bar"
-        // onClick={ this.hideCartOverlay }
       >
-        <div>
-          
-        </div>
         <div className="sections-container">
           {categories &&
             categories.map(({ name }, i) => (
@@ -127,16 +122,18 @@ class NavBarComp extends Component {
             <button
               type="button"
               className="currencies-btn"
+              data-testid="btn-currencies"
               onClick={this.changeCurrency}
             >
               {currentCurrencie} <img src={arrowDown} alt="arrow down" id="arrow-down" />
             </button>
             {isClicked && (
-              <div className="currencies-label">
+              <div className="currencies-label" data-testid="currencies-label">
                 { currencies.map(({ symbol, label }) => (
                 <button
                   type="button"
                   key={symbol}
+                  data-testid={symbol}
                   id={symbol}
                   className="options"
                   onClick={ this.currencyClick }

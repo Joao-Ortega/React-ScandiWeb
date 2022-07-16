@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { client } from '..';
+import { client } from '../App';
 import { Markup } from 'interweave';
 import AttrsComp from '../Components/AttrsComp';
 import NavBarComp from '../Components/NavBarComp';
@@ -20,6 +20,7 @@ class PDP extends Component {
   }
 
   componentDidMount() {
+    window.scrollTo(0, 0);
     this.fetchProductById();
   }
 
@@ -121,9 +122,8 @@ class PDP extends Component {
           <div className="details-info">
             <span className="name-id">
               {productClicked.id &&
-                `${productClicked.id[0].toUpperCase()}${productClicked.id.slice(
-                  1
-                )}`}
+                `${productClicked.id[0].toUpperCase()}${productClicked.id.slice(1)}`
+              }
             </span>
             <span className="product-name">{productClicked.name}</span>
             {productClicked.attributes &&

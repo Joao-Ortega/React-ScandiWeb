@@ -48,7 +48,11 @@ class ProductsCard extends Component {
          inStock
           ?
           <div className="product-card" key={ id }>
-            <Link to={`/${id}`} style={{ textDecoration: "none", color: "#1d1f22" }}>
+            <Link
+              to={`/${id}`}
+              style={{ textDecoration: "none", color: "#1d1f22" }}
+              data-testid="link"
+            >
               <img className="products-images" src={ gallery[0] } alt="product" />
               <p className="product-name">{ name }</p>
               <p className="teste">

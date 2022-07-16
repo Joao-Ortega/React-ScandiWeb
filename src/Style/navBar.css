@@ -11,6 +11,7 @@
 .sections {
   background-color: white;
   border: none;
+  cursor: pointer;
   font-family: "Raleway", sans-serif;
   font-size: 16px;
   font-style: normal;

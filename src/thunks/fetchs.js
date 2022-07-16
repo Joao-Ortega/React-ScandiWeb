@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { client } from "..";
+import { client } from "../App";
 
 export const fetchCurrencies = createAsyncThunk(
   "currency/getAllCurrencies",
