@@ -11,10 +11,12 @@ class PLP extends Component {
     this.state = {
       currentCategory: 'All',
       listOfProducts: [],
+      opacity: false,
     };
   };
 
   componentDidMount() {
+    window.scrollTo(0, 0);
     this.getInfos()
   }
   
@@ -39,15 +41,25 @@ class PLP extends Component {
     }
   }
 
+  changeOpacity = () => {
+    const { opacity } = this.state;
+    this.setState({ opacity: !opacity })
+  }
+  
+
   render() {
-    const { currentCategory, listOfProducts } = this.state;
+    const { currentCategory, listOfProducts, opacity } = this.state;
     return (
       <div>
-        <NavBarComp changeCategory={this.handleCategoryChange} />
-        <h1 className="title">{currentCategory}</h1>
-        { listOfProducts && (
-          <ProductsCard allProducts={ listOfProducts } />
-        ) }
+        <NavBarComp changeOpacity={this.changeOpacity} changeCategory={this.handleCategoryChange} />
+        <div
+          className={ opacity ? "opacity" : "" }
+        >
+          <h1 className="title">{currentCategory}</h1>
+          { listOfProducts && (
+            <ProductsCard allProducts={ listOfProducts } />
+          ) }
+        </div>
       </div>
     )
   }

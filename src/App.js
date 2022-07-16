@@ -5,8 +5,14 @@ import PDP from './Pages/PDP'
 import PLP from './Pages/PLP'
 import { store } from './store/store';
 import { fetchCategories, fetchCurrencies } from './thunks/fetchs';
+import { ApolloClient, InMemoryCache } from '@apollo/client';
 
-export default class App extends Component {
+export const client = new ApolloClient({
+  uri: 'http://localhost:4000/',
+  cache: new InMemoryCache(),
+});
+
+class App extends Component {
   componentDidMount() {
     store.dispatch(fetchCurrencies());
     store.dispatch(fetchCategories());
@@ -22,4 +28,6 @@ export default class App extends Component {
     )
   }
 }
+
+export default App;
 

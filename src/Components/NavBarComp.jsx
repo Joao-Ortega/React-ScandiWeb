@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import logo from '../Images/a-logo.svg';
 import cart from '../Images/cart.svg';
 import arrowDown from '../Images/Vector.svg';
@@ -16,6 +17,7 @@ class NavBarComp extends Component {
       currentCurrencie: '$',
       cartItems: 0,
       cartOverlay: false,
+      path: '',
     };
   }
 
@@ -27,11 +29,19 @@ class NavBarComp extends Component {
     } else {
       this.setState({ currentCurrencie: selectedCurrency })
     }
+    this.setState({ path: window.location.pathname })
   }
 
+
   changeCurrency = () => {
-    const { isClicked } = this.state;
-    this.setState({ isClicked: !isClicked, cartOverlay: false });
+    const { isClicked, cartOverlay, path } = this.state;
+    const { changeOpacity } = this.props;
+    this.setState({
+      isClicked: !isClicked, cartOverlay: false,
+    });
+    if (cartOverlay && path !== '/cart') {
+      changeOpacity()
+    }
   };
 
   currencyClick = ({ target: { id } }) => {
@@ -61,7 +71,19 @@ class NavBarComp extends Component {
 
   showPreview = () => {
     const { cartOverlay } = this.state;
-    this.setState({ cartOverlay: !cartOverlay, isClicked: false })
+    const { changeOpacity } = this.props;
+    this.setState({
+      cartOverlay: !cartOverlay, isClicked: false,
+    }, changeOpacity)
+  }
+
+  hideCartOverlay = () => {
+    const { cartOverlay } = this.state;
+    const { changeOpacity } = this.props;
+    if (cartOverlay) {
+      this.setState({cartOverlay: false});
+      changeOpacity()
+    }
   }
 
   render() {
@@ -69,10 +91,13 @@ class NavBarComp extends Component {
       arrCurrencies: { currencies },
       arrCategories: { categories },
       cartLength,
+      changeOpacity,
     } = this.props;
-    const { btnsClasses, isClicked, currentCurrencie, cartOverlay } = this.state;
+    const { btnsClasses, isClicked, currentCurrencie, cartOverlay, path } = this.state;
     return (
-      <div className="navigation-bar">
+      <div
+        className="navigation-bar"
+      >
         <div className="sections-container">
           {categories &&
             categories.map(({ name }, i) => (
@@ -88,23 +113,27 @@ class NavBarComp extends Component {
             ))}
         </div>
         <div className="store-logo">
-          <img src={logo} alt="store logo" />
+          <Link to="/" >
+            <img src={logo} alt="store logo" />
+          </Link>
         </div>
         <div className="currencies-and-cart-container">
           <div className="select-currencies-container">
             <button
               type="button"
               className="currencies-btn"
+              data-testid="btn-currencies"
               onClick={this.changeCurrency}
             >
               {currentCurrencie} <img src={arrowDown} alt="arrow down" id="arrow-down" />
             </button>
             {isClicked && (
-              <div className="currencies-label">
+              <div className="currencies-label" data-testid="currencies-label">
                 { currencies.map(({ symbol, label }) => (
                 <button
                   type="button"
                   key={symbol}
+                  data-testid={symbol}
                   id={symbol}
                   className="options"
                   onClick={ this.currencyClick }
@@ -126,8 +155,14 @@ class NavBarComp extends Component {
                 <span className="cart-length" >{cartLength}</span>
               )}
             </button>
-            {cartOverlay && (
-              <div className="cart-preview">
+            {cartOverlay && path !== "/cart" && (
+              <div
+                className="cart-preview"
+                onMouseLeave={ () => {
+                  this.setState({ cartOverlay: false })
+                  changeOpacity()
+                }}
+              >
                 <ItemsInCart itemsQt={cartLength} />
               </div>
             )}

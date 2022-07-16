@@ -1,6 +1,6 @@
 .title {
   color: #1d1f22;
-  font-family: "Raleway" sans-serif;
+  font-family: "Raleway", sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 42px;
@@ -21,7 +21,7 @@
 .out-title {
   color: #8D8F9A;
   top: 40%;
-  font-family: "Raleway" sans-serif;
+  font-family: "Raleway", sans-serif;
   font-size: 18px;
   font-style: normal;
   font-weight: 400;
@@ -83,7 +83,7 @@
 }
 
 .product-name {
-  font-family: "Raleway" sans-serif;
+  font-family: "Raleway", sans-serif;
   font-style: normal;
   font-weight: 300;
   font-size: 18px;
@@ -92,7 +92,7 @@
 
 .product-name-out {
   color: #8D8F9A;
-  font-family: "Raleway" sans-serif;
+  font-family: "Raleway", sans-serif;
   font-style: normal;
   font-weight: 300;
   font-size: 18px;
@@ -102,4 +102,11 @@
 .price-out {
   color: #8D8F9A;
   margin-bottom: 20%;
+}
+
+.opacity {
+  /* background: rgba(0, 0, 0, 0.24); */
+  opacity: 0.3;
+  /* filter: alpha(opacity=100); */
+  /* pointer-events: none; */
 }

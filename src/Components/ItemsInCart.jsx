@@ -10,13 +10,19 @@ class ItemsInCart extends Component {
     this.state = {
       items: [],
       attrSelected: [],
+      reload: false,
+      productsImgs: {},
     };
   };
 
   componentDidMount() {
     const cart = JSON.parse(localStorage.getItem('cart'));
     if (cart) {
-      this.setState({ items: cart })
+      const obj = {}
+      cart.forEach((product) => {
+        obj[product.name] = 0
+      })
+      this.setState({ items: cart, productsImgs: obj })
     }   
   }
 
@@ -45,11 +51,12 @@ class ItemsInCart extends Component {
   }
 
   renderAttributes = (attr, k, item) => {
+    const { fullCart } = this.props;
     const newList = [];
     newList[item[attr.name]] = 'choosed';
     if (attr.name === 'Color') {
       return (
-        <div className="attributes" key={k}>
+        <div className={ fullCart ? "cart-attributes" : "attributes"} key={k}>
           {attr.items.map(({ value }, i) => (
           <div
             key={i}
@@ -63,7 +70,7 @@ class ItemsInCart extends Component {
       )
     }
     return (
-      <div className="attributes" key={k}>
+      <div className={ fullCart ? "cart-attributes" : "attributes"} key={k}>
         {attr.items.map(({ value }, i) => (
         <div
           className={`attrs-cart ${newList[i]}`}
@@ -78,76 +85,151 @@ class ItemsInCart extends Component {
     )
   }
 
+  handleIncreaseImg = ({ target: { name, id } }) => {
+    const { productsImgs, items } = this.state;
+    const next = productsImgs[name] += 1;
+    if (!items[id].gallery[next]) {
+      productsImgs[name] = 0
+    } else {
+      productsImgs[name] += 1
+    }
+    this.setState({productsImgs})
+  }
+
+  handleDecreaseImg = ({ target: { name, id } }) => {
+    const { productsImgs, items } = this.state;
+    const next = productsImgs[name] -= 1;
+    if (!items[id].gallery[next]) {
+      productsImgs[name] = items[id].gallery.length - 1;
+    } else {
+      productsImgs[name] -= 1
+    }
+    this.setState({productsImgs})
+  }
+
   render() {
-    const { itemsQt, currentCurrency } = this.props;
-    const { items } = this.state;
+    const { itemsQt, currentCurrency, fullCart } = this.props;
+    const { items, productsImgs } = this.state;
     return (
-      <div>
-        <div className="cart-preview-title">
-          <span id="bag-text">My Bag, </span>
-          <span id="items-quantity">{itemsQt} {itemsQt > 1 ? 'items' : 'item'}</span>
-        </div>
-        <div className="items-container">
+      <div className={ fullCart ? "cart-container" : '' }>
+        { !fullCart && (
+          <div className="cart-preview-title">
+            <span id="bag-text">My Bag, </span>
+            <span id="items-quantity">{itemsQt} {itemsQt > 1 ? 'items' : 'item'}</span>
+          </div>
+        ) }
+        <div className={fullCart ? "products" : "items-container"}>
           { items.map((item, i) => (
-            <div key={i} className="item-infos">
-              <div className="container">
-                <div className="cart">
-                  <span className="product-name">{item.id}</span>
-                  <span className="product-name">{item.name}</span>
-                  <span className="price-cart">
+            <div key={i} className={fullCart ? "cart-infos" : "item-infos"}>
+              <div className={ fullCart ? "product-container" : "container"}>
+                <div className={ fullCart ? "attrs-container" : "cart"}>
+                  <span className={ fullCart ? "name-on-cart-bolder" : "product-name"}>{item.brand}</span>
+                  <span className={ fullCart ? "name-on-cart" : "product-name"}>{item.name}</span>
+                  <span className={ fullCart ? "cart-price" : "price-cart"}>
                     {`${currentCurrency} ${item.prices
                       .find((tag) => tag.currency.symbol === currentCurrency).amount}`}
                   </span>
                   {item.attributes.map((attrObj, k) => (
                     <div key={k}>
-                      <span className="attr-name">{attrObj.name}:</span>
+                      <span className={ fullCart ? "attr-name-cart" : "attr-name"}>{attrObj.name}:</span>
                       {this.renderAttributes(attrObj, k, item.selectedTraits)}
                     </div>
                   ))}
                 </div>
-                <div className="quantity-container">
+                <div className={ fullCart ? "quantity-cart-container" : "quantity-container"}>
                   <button
                     type="button"
                     name={i}
+                    className={ fullCart ? "qt-btns" : '' }
                     onClick={ this.sumProduct }
                   >
                     +
                   </button>
-                  <span>{item.qt}</span>
+                  <span className={ fullCart ? "qt-number" : '' } >{item.qt}</span>
                   <button
                     type="button"
                     name={i}
+                    className={ fullCart ? "qt-btns" : '' }
                     onClick={ this.subProduct }
                   >
                     -
                   </button>
                 </div>
-                <div className="container-img">
-                  <img className="product-img-cart" src={item.gallery} alt="product" />
-                </div>
+                { fullCart ? (
+                  <div className="container-img-on-cart">
+                    <img className="img-on-cart" src={item.gallery[productsImgs[item.name] || 0]} alt="product" />
+                    <div className="image-selection">
+                      <button
+                        type="button"
+                        className="view-imgs-cart"
+                        id={i}
+                        name={ item.name }
+                        onClick={ this.handleDecreaseImg }
+                      >
+                        {`<`}
+                      </button>
+                      <button
+                        type="button"
+                        className="view-imgs-cart"
+                        id={i}
+                        name={ item.name }
+                        onClick={ this.handleIncreaseImg }
+                      >
+                        {`>`}
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="container-img">
+                    <img className="product-img-cart" src={item.gallery[0]} alt="product" />
+                  </div>
+                ) }
               </div>
               </div>
           )) }
         </div>
-        <div id="total-container">
-          <span className="total-price">Total</span>
+        <div
+          id={ fullCart ? "total-cart" : "total-container"}
+        >
+          { fullCart && (
+            <div className="taxes">
+              <div className="infos-checkout">
+                <span className="span-text">Tax 21%:</span>
+                <span
+                  className="total-value"
+                >
+                  {`${currentCurrency}${(items
+                  .reduce((acc, pr) => acc += (pr.prices
+                  .find((tag) => tag.currency.symbol === currentCurrency).amount * pr.qt) , 0) * 0.21).toFixed(2)}
+                  `}
+                </span>
+              </div>
+              <div className="infos-checkout">
+                <span className="span-text">Quantity:</span>
+                <span className="total-value">{ items.reduce((acc, item) => acc += item.qt , 0) }</span>
+              </div>
+            </div>
+          ) }
+          <span className={ fullCart ? "span-text" : "total-price"}>Total:</span>
           <span
-            className="total-price"
+            className={ fullCart ? "total-value" : "total-price"}
           >
             {`${currentCurrency}${items.reduce((acc, pr) => acc += (pr.prices
                   .find((tag) => tag.currency.symbol === currentCurrency).amount * pr.qt) , 0).toFixed(2)}`}
           </span>
         </div>
-        <div className='btns-container'>
+        <div className={ fullCart ? "order-container" : "btns-container"}>
+        { !fullCart && (
           <Link to="/cart" className="cart-link">
               VIEW BAG
           </Link>
+        ) }
           <button
             type="button"
-            className="cart-btns"
+            className={ fullCart ? "order-btn" : "cart-btns"}
             id="checkout-btn"
           >
-            CHECKOUT
+            {fullCart ? 'ORDER' : 'CHECKOUT'}
           </button>
         </div>
       </div>
@@ -157,6 +239,7 @@ class ItemsInCart extends Component {
 
 const mapStateToProps = (state) => ({
   currentCurrency: state.currencies.currCurrency,
+  cartLength: state.cart.cartSize,
 });
 
 export default connect(mapStateToProps)(ItemsInCart);
