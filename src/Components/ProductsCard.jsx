@@ -17,7 +17,7 @@ class ProductsCard extends Component {
 
   handleAdditionFromPLP = ({ target }) => {
     const { allProducts } = this.props;
-    const { id, name, prices, attributes, gallery } = allProducts.find((item) => item.id === target.id);
+    const { id, name, prices, attributes, gallery, brand } = allProducts.find((item) => item.id === target.id);
     let choosedAttr = {}
     attributes.forEach((obj) => {
       choosedAttr[obj.name] = 0
@@ -28,7 +28,8 @@ class ProductsCard extends Component {
       prices,
       attributes,
       qt: 1,
-      gallery: gallery[0],
+      gallery,
+      brand,
       selectedTraits: choosedAttr, 
     }
     const cart = JSON.parse(localStorage.getItem('cart'));
@@ -44,7 +45,7 @@ class ProductsCard extends Component {
     const { allProducts, currentCurrency } = this.props;
     return (
       <div className="products-container">
-       { allProducts && allProducts.map(({ id, gallery, name, prices, inStock }) => (
+       { allProducts && allProducts.map(({ id, gallery, name, prices, inStock, brand }) => (
          inStock
           ?
           <div className="product-card" key={ id }>
@@ -54,7 +55,7 @@ class ProductsCard extends Component {
               data-testid="link"
             >
               <img className="products-images" src={ gallery[0] } alt="product" />
-              <p className="product-name">{ name }</p>
+              <p className="product-name">{`${brand} ${name}`}</p>
               <p className="teste">
                 { `${currentCurrency} ${prices
                   .find((tag) => tag.currency.symbol === currentCurrency).amount}` }
@@ -71,7 +72,7 @@ class ProductsCard extends Component {
           <div className="product-card-out" key={ id }>
             <p className="out-title">OUT OF STOCK</p>
             <img className="out-image" src={ gallery[0] } alt="" />
-            <p className="product-name-out">{ name }</p>
+            <p className="product-name-out">{`${brand} ${name}`}</p>
             <p className="price-out">
               { `${currentCurrency} ${prices
                   .find((tag) => tag.currency.symbol === currentCurrency).amount}` }

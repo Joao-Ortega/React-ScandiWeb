@@ -11,13 +11,18 @@ class ItemsInCart extends Component {
       items: [],
       attrSelected: [],
       reload: false,
+      productsImgs: {},
     };
   };
 
   componentDidMount() {
     const cart = JSON.parse(localStorage.getItem('cart'));
     if (cart) {
-      this.setState({ items: cart })
+      const obj = {}
+      cart.forEach((product) => {
+        obj[product.name] = 0
+      })
+      this.setState({ items: cart, productsImgs: obj })
     }   
   }
 
@@ -80,9 +85,31 @@ class ItemsInCart extends Component {
     )
   }
 
+  handleIncreaseImg = ({ target: { name, id } }) => {
+    const { productsImgs, items } = this.state;
+    const next = productsImgs[name] += 1;
+    if (!items[id].gallery[next]) {
+      productsImgs[name] = 0
+    } else {
+      productsImgs[name] += 1
+    }
+    this.setState({productsImgs})
+  }
+
+  handleDecreaseImg = ({ target: { name, id } }) => {
+    const { productsImgs, items } = this.state;
+    const next = productsImgs[name] -= 1;
+    if (!items[id].gallery[next]) {
+      productsImgs[name] = items[id].gallery.length - 1;
+    } else {
+      productsImgs[name] -= 1
+    }
+    this.setState({productsImgs})
+  }
+
   render() {
     const { itemsQt, currentCurrency, fullCart } = this.props;
-    const { items } = this.state;
+    const { items, productsImgs } = this.state;
     return (
       <div className={ fullCart ? "cart-container" : '' }>
         { !fullCart && (
@@ -96,7 +123,7 @@ class ItemsInCart extends Component {
             <div key={i} className={fullCart ? "cart-infos" : "item-infos"}>
               <div className={ fullCart ? "product-container" : "container"}>
                 <div className={ fullCart ? "attrs-container" : "cart"}>
-                  <span className={ fullCart ? "name-on-cart-bolder" : "product-name"}>{item.id}</span>
+                  <span className={ fullCart ? "name-on-cart-bolder" : "product-name"}>{item.brand}</span>
                   <span className={ fullCart ? "name-on-cart" : "product-name"}>{item.name}</span>
                   <span className={ fullCart ? "cart-price" : "price-cart"}>
                     {`${currentCurrency} ${item.prices
@@ -128,9 +155,35 @@ class ItemsInCart extends Component {
                     -
                   </button>
                 </div>
-                <div className={ fullCart ? "container-img-on-cart" : "container-img"}>
-                  <img className={ fullCart ? "img-on-cart" : "product-img-cart"} src={item.gallery} alt="product" />
-                </div>
+                { fullCart ? (
+                  <div className="container-img-on-cart">
+                    <img className="img-on-cart" src={item.gallery[productsImgs[item.name] || 0]} alt="product" />
+                    <div className="image-selection">
+                      <button
+                        type="button"
+                        className="view-imgs-cart"
+                        id={i}
+                        name={ item.name }
+                        onClick={ this.handleDecreaseImg }
+                      >
+                        {`<`}
+                      </button>
+                      <button
+                        type="button"
+                        className="view-imgs-cart"
+                        id={i}
+                        name={ item.name }
+                        onClick={ this.handleIncreaseImg }
+                      >
+                        {`>`}
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="container-img">
+                    <img className="product-img-cart" src={item.gallery[0]} alt="product" />
+                  </div>
+                ) }
               </div>
               </div>
           )) }

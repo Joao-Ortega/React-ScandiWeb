@@ -112,6 +112,26 @@
   width: 115px;
 }
 
+.container-img-on-cart {
+  position: relative;
+}
+
+.image-selection {
+  top: 85%;
+  right: 8%;
+  position: absolute;
+}
+
+.view-imgs-cart {
+  background-color: rgba(0, 0, 0, 0.73);
+  border: none;
+  color: white;
+  cursor: pointer;
+  height: 24px;
+  margin: 6px;
+  width: 24px;
+}
+
 #total-container {
   align-items: center;
   /* border: 1px solid black; */

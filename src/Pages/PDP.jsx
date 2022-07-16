@@ -48,7 +48,8 @@ class PDP extends Component {
                 symbol
               }
               amount
-            }
+            },
+            brand
           }
       }`,
       })
@@ -59,7 +60,7 @@ class PDP extends Component {
 
   handleAdditionFromPDP = () => {
     const { productClicked: {
-      id, name, prices, attributes, gallery,
+      id, name, prices, attributes, gallery, brand,
     } } = this.state;
     const currentAttr = JSON.parse(localStorage.getItem('currentAttrs'));
     let buildObj = {}
@@ -77,7 +78,8 @@ class PDP extends Component {
       prices,
       attributes,
       qt: 1,
-      gallery: gallery[0],
+      gallery,
+      brand,
       selectedTraits: buildObj,
     }
     const cart = JSON.parse(localStorage.getItem('cart'));
@@ -121,8 +123,8 @@ class PDP extends Component {
           />
           <div className="details-info">
             <span className="name-id">
-              {productClicked.id &&
-                `${productClicked.id[0].toUpperCase()}${productClicked.id.slice(1)}`
+              {productClicked.brand &&
+                productClicked.brand
               }
             </span>
             <span className="product-name">{productClicked.name}</span>
