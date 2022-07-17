@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import logo from '../Images/a-logo.svg';
 import cart from '../Images/cart.svg';
 import arrowDown from '../Images/Vector.svg';
+import { hidePreview, showPreview } from '../Reducers/cartSlice';
 import { setCurrency } from '../Reducers/currenciesSlice';
 import { store } from '../store/store';
 import ItemsInCart from './ItemsInCart';
@@ -16,7 +17,6 @@ class NavBarComp extends Component {
       isClicked: false,
       currentCurrencie: '$',
       cartItems: 0,
-      cartOverlay: false,
       path: '',
     };
   }
@@ -34,12 +34,13 @@ class NavBarComp extends Component {
 
 
   changeCurrency = () => {
-    const { isClicked, cartOverlay, path } = this.state;
-    const { changeOpacity } = this.props;
+    const { isClicked, path } = this.state;
+    const { changeOpacity, cartOverlay } = this.props;
     this.setState({
-      isClicked: !isClicked, cartOverlay: false,
+      isClicked: !isClicked,
     });
     if (cartOverlay && path !== '/cart') {
+      store.dispatch(hidePreview())
       changeOpacity()
     }
   };
@@ -69,19 +70,23 @@ class NavBarComp extends Component {
     return `${str.charAt(0).toUpperCase()}${str.slice(1)}`;
   };
 
-  showPreview = () => {
-    const { cartOverlay } = this.state;
-    const { changeOpacity } = this.props;
+  handleCartClick = () => {
+    const { changeOpacity, cartOverlay } = this.props;
+    if (!cartOverlay) {
+      store.dispatch(showPreview())
+    } else {
+      store.dispatch(hidePreview())
+    }
     this.setState({
-      cartOverlay: !cartOverlay, isClicked: false,
-    }, changeOpacity)
+      isClicked: false,
+    })
+    changeOpacity()
   }
 
   hideCartOverlay = () => {
-    const { cartOverlay } = this.state;
-    const { changeOpacity } = this.props;
+    const { changeOpacity, cartOverlay } = this.props;
     if (cartOverlay) {
-      this.setState({cartOverlay: false});
+      store.dispatch(hidePreview())
       changeOpacity()
     }
   }
@@ -91,26 +96,46 @@ class NavBarComp extends Component {
       arrCurrencies: { currencies },
       arrCategories: { categories },
       cartLength,
+      cartOverlay,
+      changeCategory,
       changeOpacity,
     } = this.props;
-    const { btnsClasses, isClicked, currentCurrencie, cartOverlay, path } = this.state;
+    const { btnsClasses, isClicked, currentCurrencie, path } = this.state;
     return (
       <div
         className="navigation-bar"
       >
-        <div className="sections-container">
-          {categories &&
-            categories.map(({ name }, i) => (
-              <button
-                key={i}
-                className={`sections ${btnsClasses[i]}`}
-                value={i}
-                name={name}
-                onClick={this.handleClick}
+        <div
+          className="sections-container"
+          onClick={ () => {
+            if (cartOverlay) {
+              store.dispatch(hidePreview())
+              changeOpacity()
+            }
+          } }
+        >
+          { changeCategory ? (
+            categories &&
+              categories.map(({ name }, i) => (
+                <button
+                  key={i}
+                  className={`sections ${btnsClasses[i]}`}
+                  value={i}
+                  name={name}
+                  onClick={this.handleClick}
+                >
+                  {name}
+                </button>
+              ))
+          ) : (
+            <Link to="/" style={{ textDecoration: "none", color: "black" }} >
+              <span
+              className="scandishop-btn"
               >
-                {name}
-              </button>
-            ))}
+                ScandiShop
+              </span>
+            </Link>
+          ) }
         </div>
         <div className="store-logo">
           <Link to="/" >
@@ -148,7 +173,7 @@ class NavBarComp extends Component {
             <button
               type="button"
               className="cart-icon-btn"
-              onClick={ this.showPreview }
+              onClick={ this.handleCartClick }
             >
               <img src={cart} alt="shopping cart" className="cart-img" />
               {cartLength > 0 && (
@@ -158,10 +183,6 @@ class NavBarComp extends Component {
             {cartOverlay && path !== "/cart" && (
               <div
                 className="cart-preview"
-                onMouseLeave={ () => {
-                  this.setState({ cartOverlay: false })
-                  changeOpacity()
-                }}
               >
                 <ItemsInCart itemsQt={cartLength} />
               </div>
@@ -178,6 +199,7 @@ const mapStateToProps = (state) => ({
   selectedCurrency: state.currencies.currCurrency,
   arrCategories: state.categories,
   cartLength: state.cart.cartSize,
+  cartOverlay: state.cart.cartOverlay,
 });
 
 export default connect(mapStateToProps)(NavBarComp);

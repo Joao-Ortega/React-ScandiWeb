@@ -6,7 +6,7 @@ import { Markup } from 'interweave';
 import AttrsComp from '../Components/AttrsComp';
 import NavBarComp from '../Components/NavBarComp';
 import { store } from '../store/store';
-import { updateCartLength } from '../Reducers/cartSlice';
+import { hidePreview, updateCartLength } from '../Reducers/cartSlice';
 import { handleProductsOnLocal } from '../Services/handleProductsOnLocal';
 
 class PDP extends Component {
@@ -16,12 +16,18 @@ class PDP extends Component {
       productClicked: { gallery: [] },
       currentImg: 0,
       productInfos: {},
+      opacity: false,
     };
   }
 
   componentDidMount() {
     window.scrollTo(0, 0);
     this.fetchProductById();
+  }
+
+  changeOpacity = () => {
+    const { opacity } = this.state;
+    this.setState({ opacity: !opacity })
   }
 
   fetchProductById = () => {
@@ -96,12 +102,23 @@ class PDP extends Component {
   };
 
   render() {
-    const { productClicked, currentImg } = this.state;
-    const { currency } = this.props;
+    const { productClicked, currentImg, opacity } = this.state;
+    const { currency, cartOverlay } = this.props;
     return (
       <div>
-        <NavBarComp />
-        <div className="product-detail-container">
+        <div
+          onClick={ () => {
+            if (cartOverlay) {
+              store.dispatch(hidePreview())
+              this.changeOpacity()
+            }
+          } }
+        >
+          <NavBarComp
+            changeOpacity={this.changeOpacity}
+          />
+        </div>
+        <div className={ opacity ? "detail-opac" : "product-detail-container"}>
           {productClicked && (
             <div className="gallery-container">
               {productClicked.gallery.map((imgs, i) => (
@@ -169,6 +186,7 @@ class PDP extends Component {
 
 const mapStateToProps = (state) => ({
   currency: state.currencies.currCurrency,
+  cartOverlay: state.cart.cartOverlay,
 });
 
 export default connect(mapStateToProps)(PDP);

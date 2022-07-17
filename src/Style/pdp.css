@@ -6,6 +6,15 @@
   width: 90vw;
 }
 
+.detail-opac {
+  display: flex;
+  justify-content: space-evenly;
+  min-height: 90vh;
+  margin: 2% auto;
+  opacity: 0.22;
+  width: 90vw;
+}
+
 .gallery-container {
   display: flex;
   flex-direction: column;
@@ -122,6 +131,20 @@
   min-width: 90%;
   padding: 7%;
   width: 110%;
+}
+
+.add-btn:hover {
+  color: black;
+  transition: 500ms;
+}
+
+.add-btn:not(:hover) {
+  transition: 500ms;
+}
+
+.add-btn:active {
+  /* height: 50px; */
+  width: 50px;
 }
 
 .description {

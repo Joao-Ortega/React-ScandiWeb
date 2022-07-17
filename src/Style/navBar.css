@@ -21,6 +21,23 @@
   text-transform: uppercase;
 }
 
+.scandishop-btn {
+  background-color: white;
+  border: none;
+  cursor: pointer;
+  font-family: "Raleway", sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 120%;
+  padding: 20px;
+  text-transform: uppercase;
+}
+
+.scandishop-btn:hover {
+  color: #5ECE7B;
+} 
+
 .store-logo {
   width: 10%;
 }
@@ -42,6 +59,10 @@
   display: flex;
   justify-content: space-around;
   padding: 0.5%;
+}
+
+.navigation-bar-opac {
+  opacity: 0.22;
 }
 
 .selected {
@@ -112,7 +133,7 @@
   background-color: white;
   display: flex;
   flex-direction: column;
-  height: 3000%;
+  height: 2500%;
   min-width: 385px;
   overflow: scroll;
   overflow-x:hidden ;
