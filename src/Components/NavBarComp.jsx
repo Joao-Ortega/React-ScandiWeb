@@ -17,7 +17,6 @@ class NavBarComp extends Component {
       isClicked: false,
       currentCurrencie: '$',
       cartItems: 0,
-      // cartOverlay: false,
       path: '',
     };
   }
@@ -75,6 +74,8 @@ class NavBarComp extends Component {
     const { changeOpacity, cartOverlay } = this.props;
     if (!cartOverlay) {
       store.dispatch(showPreview())
+    } else {
+      store.dispatch(hidePreview())
     }
     this.setState({
       isClicked: false,
@@ -97,13 +98,22 @@ class NavBarComp extends Component {
       cartLength,
       cartOverlay,
       changeCategory,
+      changeOpacity,
     } = this.props;
     const { btnsClasses, isClicked, currentCurrencie, path } = this.state;
     return (
       <div
         className="navigation-bar"
       >
-        <div className="sections-container">
+        <div
+          className="sections-container"
+          onClick={ () => {
+            if (cartOverlay) {
+              store.dispatch(hidePreview())
+              changeOpacity()
+            }
+          } }
+        >
           { changeCategory ? (
             categories &&
               categories.map(({ name }, i) => (
@@ -173,10 +183,6 @@ class NavBarComp extends Component {
             {cartOverlay && path !== "/cart" && (
               <div
                 className="cart-preview"
-                // onMouseLeave={ () => {
-                //   this.setState({ cartOverlay: false })
-                //   changeOpacity()
-                // }}
               >
                 <ItemsInCart itemsQt={cartLength} />
               </div>

@@ -12,7 +12,6 @@ class PLP extends Component {
     this.state = {
       currentCategory: 'All',
       listOfProducts: [],
-      // cartOverlay: false,
       opacity: false,
     };
   };
@@ -47,31 +46,16 @@ class PLP extends Component {
     const { opacity } = this.state;
     this.setState({ opacity: !opacity })
   }
-  
-  // changeCartOverlay = (newValue) => {
-  //   this.setState({ cartOverlay: newValue})
-  // }
 
   render() {
     const { currentCategory, listOfProducts, opacity } = this.state;
     const { cartOverlay } = this.props;
     return (
       <div>
-        <div
-          onClick={ () => {
-            if (cartOverlay) {
-              store.dispatch(hidePreview())
-              this.changeOpacity()
-            }
-          } }
-        >
-          <NavBarComp
-            changeOpacity={this.changeOpacity}
-            changeCategory={this.handleCategoryChange}
-            // changeCartOverlay={this.changeCartOverlay}
-            // cartOverlay={cartOverlay}
-          />
-        </div>
+        <NavBarComp
+          changeOpacity={this.changeOpacity}
+          changeCategory={this.handleCategoryChange}
+        />
         <div
           className={ opacity ? "navigation-bar-opac" : "" }
           onClick={ () => {

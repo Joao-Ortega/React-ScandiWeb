@@ -64,6 +64,21 @@
   cursor: pointer;
   position: relative;
   right: 6%;
+  transition: 500ms;
+}
+
+.addCartBtn:not(:hover) img {
+  transition: 750ms;
+}
+
+.addCartBtn:hover img {
+  transform: rotate(-0.08turn);
+  transition: 500ms;
+}
+
+.addCartBtn:active img {
+  height: 45px;
+  width: 45px;
 }
 
 .products-images {
