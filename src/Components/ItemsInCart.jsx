@@ -19,8 +19,8 @@ class ItemsInCart extends Component {
     const cart = JSON.parse(localStorage.getItem('cart'));
     if (cart) {
       const obj = {}
-      cart.forEach((product) => {
-        obj[product.name] = 0
+      cart.forEach((product, i) => {
+        obj[i] = 0
       })
       this.setState({ items: cart, productsImgs: obj })
     }   
@@ -85,24 +85,24 @@ class ItemsInCart extends Component {
     )
   }
 
-  handleIncreaseImg = ({ target: { name, id } }) => {
+  handleIncreaseImg = ({ target: { id } }) => {
     const { productsImgs, items } = this.state;
-    const next = productsImgs[name] += 1;
+    const next = productsImgs[id] += 1;
     if (!items[id].gallery[next]) {
-      productsImgs[name] = 0
+      productsImgs[id] = 0
     } else {
-      productsImgs[name] += 1
+      productsImgs[id] += 1
     }
     this.setState({productsImgs})
   }
 
-  handleDecreaseImg = ({ target: { name, id } }) => {
+  handleDecreaseImg = ({ target: { id } }) => {
     const { productsImgs, items } = this.state;
-    const next = productsImgs[name] -= 1;
+    const next = productsImgs[id] -= 1;
     if (!items[id].gallery[next]) {
-      productsImgs[name] = items[id].gallery.length - 1;
+      productsImgs[id] = items[id].gallery.length - 1;
     } else {
-      productsImgs[name] -= 1
+      productsImgs[id] -= 1
     }
     this.setState({productsImgs})
   }
@@ -157,7 +157,7 @@ class ItemsInCart extends Component {
                 </div>
                 { fullCart ? (
                   <div className="container-img-on-cart">
-                    <img className="img-on-cart" src={item.gallery[productsImgs[item.name] || 0]} alt="product" />
+                    <img className="img-on-cart" src={item.gallery[productsImgs[i] || 0]} alt="product" />
                     <div className="image-selection">
                       <button
                         type="button"
