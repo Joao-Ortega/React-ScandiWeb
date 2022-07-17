@@ -37,10 +37,14 @@ class ItemsInCart extends Component {
   subProduct = ({ target: { name } }) => {
     const cart = JSON.parse(localStorage.getItem('cart'));
     const nextQuantity = cart[name].qt;
+    const obj = {}
     if (nextQuantity - 1 === 0) {
       cart.splice(name, 1);
       localStorage.setItem('cart', JSON.stringify(cart));
-      this.setState({ items: cart });
+      cart.forEach((product, i) => {
+        obj[i] = 0
+      })
+      this.setState({ items: cart, productsImgs: obj });
       store.dispatch(updateCartLength(cart.reduce((acc, item) => acc += item.qt, 0)))
     } else {
       cart[name].qt -= 1;
