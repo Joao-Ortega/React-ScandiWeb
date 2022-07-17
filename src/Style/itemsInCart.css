@@ -43,7 +43,6 @@
 .cart {
   display: flex;
   flex-direction: column;
-  /* height: 200px; */
   justify-content: space-evenly;
   min-height: 50%;
   width: 180px;

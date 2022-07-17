@@ -133,7 +133,8 @@
   background-color: white;
   display: flex;
   flex-direction: column;
-  height: 2500%;
+  height: 2800%;
+  min-height: 2000%;
   min-width: 385px;
   overflow: scroll;
   overflow-x:hidden ;
