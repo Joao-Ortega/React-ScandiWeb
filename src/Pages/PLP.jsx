@@ -18,6 +18,7 @@ class PLP extends Component {
 
   componentDidMount() {
     window.scrollTo(0, 0);
+    store.dispatch(hidePreview())
     this.getInfos()
   }
   

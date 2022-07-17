@@ -4,6 +4,10 @@ import ItemsInCart from '../Components/ItemsInCart'
 import NavBarComp from '../Components/NavBarComp'
 
 class Cart extends Component {
+  componentDidMount() {
+    window.scrollTo(0, 0);
+  }
+
   render() {
     const { cartLength } = this.props;
     return (

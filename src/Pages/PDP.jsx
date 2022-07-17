@@ -106,7 +106,11 @@ class PDP extends Component {
     const { currency, cartOverlay } = this.props;
     return (
       <div>
+        <NavBarComp
+          changeOpacity={this.changeOpacity}
+        />
         <div
+          className={ opacity ? "detail-opac" : "product-detail-container"}
           onClick={ () => {
             if (cartOverlay) {
               store.dispatch(hidePreview())
@@ -114,11 +118,6 @@ class PDP extends Component {
             }
           } }
         >
-          <NavBarComp
-            changeOpacity={this.changeOpacity}
-          />
-        </div>
-        <div className={ opacity ? "detail-opac" : "product-detail-container"}>
           {productClicked && (
             <div className="gallery-container">
               {productClicked.gallery.map((imgs, i) => (
