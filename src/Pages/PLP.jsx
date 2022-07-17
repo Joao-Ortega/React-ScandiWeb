@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import NavBarComp from '../Components/NavBarComp'
 import ProductsCard from '../Components/ProductsCard';
+import { hidePreview } from '../Reducers/cartSlice';
 import { store } from '../store/store';
 import { fetchAllProducts } from '../thunks/fetchs';
 
@@ -11,6 +12,7 @@ class PLP extends Component {
     this.state = {
       currentCategory: 'All',
       listOfProducts: [],
+      // cartOverlay: false,
       opacity: false,
     };
   };
@@ -46,14 +48,38 @@ class PLP extends Component {
     this.setState({ opacity: !opacity })
   }
   
+  // changeCartOverlay = (newValue) => {
+  //   this.setState({ cartOverlay: newValue})
+  // }
 
   render() {
     const { currentCategory, listOfProducts, opacity } = this.state;
+    const { cartOverlay } = this.props;
     return (
       <div>
-        <NavBarComp changeOpacity={this.changeOpacity} changeCategory={this.handleCategoryChange} />
         <div
-          className={ opacity ? "opacity" : "" }
+          onClick={ () => {
+            if (cartOverlay) {
+              store.dispatch(hidePreview())
+              this.changeOpacity()
+            }
+          } }
+        >
+          <NavBarComp
+            changeOpacity={this.changeOpacity}
+            changeCategory={this.handleCategoryChange}
+            // changeCartOverlay={this.changeCartOverlay}
+            // cartOverlay={cartOverlay}
+          />
+        </div>
+        <div
+          className={ opacity ? "navigation-bar-opac" : "" }
+          onClick={ () => {
+            if (cartOverlay) {
+              store.dispatch(hidePreview())
+              this.changeOpacity()
+            }
+          } }
         >
           <h1 className="title">{currentCategory}</h1>
           { listOfProducts && (
@@ -67,6 +93,7 @@ class PLP extends Component {
 
 const mapStateToProps = (state) => ({
   products: state.products,
+  cartOverlay: state.cart.cartOverlay,
 });
 
 export default connect(mapStateToProps)(PLP);

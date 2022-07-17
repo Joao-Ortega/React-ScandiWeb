@@ -6,6 +6,15 @@
   width: 90vw;
 }
 
+.detail-opac {
+  display: flex;
+  justify-content: space-evenly;
+  min-height: 90vh;
+  margin: 2% auto;
+  opacity: 0.22;
+  width: 90vw;
+}
+
 .gallery-container {
   display: flex;
   flex-direction: column;
