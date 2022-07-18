@@ -20,14 +20,14 @@ class ItemsInCart extends Component {
     const imgsPosition = JSON.parse(localStorage.getItem('imgsPosition'));
     if (cart && !imgsPosition) {
       const obj = {}
-      cart.forEach((product, i) => {
+      cart.forEach((_product, i) => {
         obj[i] = 0
       })
       this.setState({ items: cart, productsImgs: obj })
       localStorage.setItem('imgsPosition', JSON.stringify(obj))   
     }
     if (cart && imgsPosition) {
-      cart.forEach((product, i) => {
+      cart.forEach((_product, i) => {
         if (!imgsPosition[i]) {
           imgsPosition[i] = 0
         }
@@ -116,14 +116,11 @@ class ItemsInCart extends Component {
 
   handleIncreaseImg = ({ target: { id } }) => {
     const { productsImgs, items } = this.state;
-    // const imgs = JSON.parse(localStorage.getItem('imgsPosition'))
     const next = productsImgs[id] + 1;
     if (!items[id].gallery[next]) {
       productsImgs[id] = 0
-      // imgs[id] = 0
     } else {
       productsImgs[id] += 1
-      // imgs[id] += 1
     }
     this.setState({productsImgs})
     localStorage.setItem('imgsPosition', JSON.stringify(productsImgs))
@@ -131,14 +128,11 @@ class ItemsInCart extends Component {
 
   handleDecreaseImg = ({ target: { id } }) => {
     const { productsImgs, items } = this.state;
-    // const imgs = JSON.parse(localStorage.getItem('imgsPosition'))
     const next = productsImgs[id] - 1;
     if (!items[id].gallery[next]) {
       productsImgs[id] = items[id].gallery.length - 1;
-      // imgs[id] = items[id].gallery.length - 1;
     } else {
       productsImgs[id] -= 1;
-      // imgs[id] -= 1
     }
     this.setState({productsImgs})
     localStorage.setItem('imgsPosition', JSON.stringify(productsImgs))

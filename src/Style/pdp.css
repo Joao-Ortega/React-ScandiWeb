@@ -35,8 +35,10 @@
 
 .details-info {
   display: flex;
-  flex-direction: column;
-  max-width: 18%;
+  flex-direction: column; 
+  /* max-width: 22%; */
+  min-height: 850px;
+  min-width: 20%
 }
 
 .name-id {
@@ -90,22 +92,23 @@
   height: 2px;
   justify-content: center;
   line-height: 18px;
-  padding: 6%;
+  padding: 5%;
   text-align: center;
   width: 2px;
 }
 
 .colors {
   border: 1px solid black;
+  box-shadow: inset 0 0 0 0 white;
   cursor: pointer;
   height: 2px;
-  padding: 6%;
+  padding: 5%;
   width: 2px;
 }
 
 .choosed {
   background-color: black;
-  border: 2px solid #5ECE7B;
+  border: 3px solid #5ECE7B;
   color: white;
 }
 
