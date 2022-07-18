@@ -45,25 +45,31 @@ class ItemsInCart extends Component {
     store.dispatch(updateCartLength(cart.reduce((acc, item) => acc += item.qt, 0)))
   }
 
-  subProduct = ({ target: { name } }) => {
-    const { productsImgs } = this.state;
-    const cart = JSON.parse(localStorage.getItem('cart'));
+  updateImages = (newCart, idDeleted) => {
     const imgsPosition = JSON.parse(localStorage.getItem('imgsPosition'));
-    const nextQuantity = cart[name].qt;
     const obj = {}
+    delete imgsPosition[idDeleted]
+    const leftKeys = Object.keys(imgsPosition)
+    console.log(leftKeys);
+    newCart.forEach((product, index) => {
+      if (index !== Number(leftKeys[index])) {
+        obj[index] = imgsPosition[index + 1];
+      } else {
+        obj[index] = imgsPosition[index];
+      }
+    });
+    return obj;
+  }
+
+  subProduct = ({ target: { name } }) => {
+    const cart = JSON.parse(localStorage.getItem('cart'));
+    const nextQuantity = cart[name].qt;
     if (nextQuantity - 1 === 0) {
-      delete imgsPosition[name]
       cart.splice(name, 1);
       localStorage.setItem('cart', JSON.stringify(cart));
-      cart.forEach((product, i) => {
-        if (i === 0) {
-          obj[i] = imgsPosition[i + 1]
-        } else {
-          obj[i] = Number(Object.keys(imgsPosition)[i]) || Number(Object.keys(imgsPosition)[i - 1])
-        }   
-      })
-      this.setState({ items: cart, productsImgs: obj, });
-      localStorage.setItem('imgsPosition', JSON.stringify(obj))
+      const newPositions = this.updateImages(cart, name)
+      this.setState({ items: cart, productsImgs: newPositions, });
+      localStorage.setItem('imgsPosition', JSON.stringify(newPositions));
       store.dispatch(updateCartLength(cart.reduce((acc, item) => acc += item.qt, 0)))
     } else {
       cart[name].qt -= 1;
