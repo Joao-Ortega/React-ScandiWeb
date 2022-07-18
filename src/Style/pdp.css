@@ -35,9 +35,10 @@
 
 .details-info {
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
+  max-width: 22%; 
   min-height: 850px;
-  min-width: 20%
+  min-width: 20%;
 }
 
 .name-id {
