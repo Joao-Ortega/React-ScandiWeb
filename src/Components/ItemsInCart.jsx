@@ -16,6 +16,10 @@ class ItemsInCart extends Component {
   };
 
   componentDidMount() {
+   this.changerImagesBuilder()
+  }
+
+  changerImagesBuilder = () => {
     const cart = JSON.parse(localStorage.getItem('cart'));
     const imgsPosition = JSON.parse(localStorage.getItem('imgsPosition'));
     if (cart && !imgsPosition) {
@@ -50,7 +54,6 @@ class ItemsInCart extends Component {
     const obj = {}
     delete imgsPosition[idDeleted]
     const leftKeys = Object.keys(imgsPosition)
-    console.log(leftKeys);
     newCart.forEach((product, index) => {
       if (index !== Number(leftKeys[index])) {
         obj[index] = imgsPosition[index + 1];

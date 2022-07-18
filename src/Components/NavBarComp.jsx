@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link, Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import logo from '../Images/a-logo.svg';
 import cart from '../Images/cart.svg';
 import arrowDown from '../Images/Vector.svg';
@@ -55,9 +55,9 @@ class NavBarComp extends Component {
   }
 
   handleClick = ({ target }) => {
+    const { mainUrl } = this.props;
     const currentLocation = window.location.href;
-    const MAIN_URL = 'http://localhost:3000/';
-    if (currentLocation === MAIN_URL) {
+    if (currentLocation === mainUrl) {
       const { changeCategory } = this.props;
       changeCategory(target.name);
       const newClasses = [];
@@ -81,14 +81,6 @@ class NavBarComp extends Component {
       isClicked: false,
     })
     changeOpacity()
-  }
-
-  hideCartOverlay = () => {
-    const { changeOpacity, cartOverlay } = this.props;
-    if (cartOverlay) {
-      store.dispatch(hidePreview())
-      changeOpacity()
-    }
   }
 
   render() {
@@ -198,6 +190,7 @@ const mapStateToProps = (state) => ({
   arrCurrencies: state.currencies,
   selectedCurrency: state.currencies.currCurrency,
   arrCategories: state.categories,
+  mainUrl: state.categories.mainUrl,
   cartLength: state.cart.cartSize,
   cartOverlay: state.cart.cartOverlay,
 });

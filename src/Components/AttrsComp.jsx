@@ -10,6 +10,10 @@ class AttrsComp extends Component {
   }
 
   componentDidMount() {
+    this.objectBuilderToAttributes()
+  }
+
+  objectBuilderToAttributes = () => {
     const { attribute, productName } = this.props;
     const obj = JSON.parse(localStorage.getItem('currentAttrs'));
     if (!obj) {

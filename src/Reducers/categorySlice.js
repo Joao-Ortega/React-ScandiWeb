@@ -3,12 +3,17 @@ import { fetchCategories } from '../thunks/fetchs';
 
 const initialState = {
   categories: [],
+  mainUrl: '',
 };
 
 export const categoriesSlice = createSlice({
   name: 'categories',
   initialState,
-  reducers: {},
+  reducers: {
+    getMainUrl: (state, action) => {
+      state.mainUrl = action.payload
+    }
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchCategories.fulfilled, (state, action) => {
       state.categories = action.payload;
@@ -18,5 +23,7 @@ export const categoriesSlice = createSlice({
     })
   }
 })
+
+export const { getMainUrl } = categoriesSlice.actions
 
 export default categoriesSlice.reducer;

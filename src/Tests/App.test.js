@@ -39,15 +39,4 @@ describe('Test the App component', () => {
     const newCurrency = screen.getByText('£')
     expect(newCurrency).toBeInTheDocument()
   });
-
-  it('Test when click on cart icon the number 0 is on items quantity', async () => {
-    renderWithProviders(<App />)
-    const cartIcon = screen.getByRole('img', { name: /shopping cart/i })
-    expect(cartIcon).toBeInTheDocument()
-    await userEvent.click(cartIcon)
-
-    const textWithItemQuantity = screen.getByText(/0 item/i)
-    expect(textWithItemQuantity).toBeInTheDocument()
-
-  })
 })

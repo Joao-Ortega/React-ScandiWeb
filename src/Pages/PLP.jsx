@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import NavBarComp from '../Components/NavBarComp'
 import ProductsCard from '../Components/ProductsCard';
 import { hidePreview } from '../Reducers/cartSlice';
+import { getMainUrl } from '../Reducers/categorySlice';
 import { store } from '../store/store';
 import { fetchAllProducts } from '../thunks/fetchs';
 
@@ -18,6 +19,7 @@ class PLP extends Component {
 
   componentDidMount() {
     window.scrollTo(0, 0);
+    store.dispatch(getMainUrl(window.location.href))
     store.dispatch(hidePreview())
     this.getInfos()
   }

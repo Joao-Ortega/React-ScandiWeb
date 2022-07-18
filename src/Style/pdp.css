@@ -36,7 +36,6 @@
 .details-info {
   display: flex;
   flex-direction: column; 
-  /* max-width: 22%; */
   min-height: 850px;
   min-width: 20%
 }
